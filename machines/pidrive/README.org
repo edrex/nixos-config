@@ -6,7 +6,8 @@
 ** DONE Connect via SSH
    CLOSED: [2021-02-05 Fri 00:27]
 ** TODO Rsync repo dir over
-** TODO Run nix-rebuild
+** DONE sudo ln -s $PWD/configuration.nix /etc/nixos/ 
+** TODO Run nixos-rebuild
 * Features
 ** m1: prove out my shell env
 *** TODO sway stuff
