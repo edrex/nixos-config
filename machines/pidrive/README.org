@@ -1,0 +1,28 @@
+* Bootstrap checklist
+** DONE Write latest image
+   for now, use 
+   https://github.com/NixOS/nixpkgs/issues/97064#issuecomment-759373891
+** DONE Copy ssh pubkey to ~nixos/.ssh/authorized_keys
+** DONE Connect via SSH
+   CLOSED: [2021-02-05 Fri 00:27]
+** TODO Rsync repo dir over
+** TODO Run nix-rebuild
+* Features
+** m1: prove out my shell env
+*** TODO sway stuff
+    use colemickens' overlay prob
+    - waybar
+    - wofi
+    - wlr-randr
+    - kanshi
+*** TODO homemanager
+    - sway
+    - spacemacs
+*** spacemacs
+    use a "link farm": [[https://discourse.nixos.org/t/home-manager-spacemacs/8033/4][Home-manager & spacemacs - #4 by theotherjimmy - Learn - NixOS Discourse]] 
+** m2
+*** TODO Wireguard
+*** TODO Syncthing
+* References
+** https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3
+** TODO Evaluate [add raspberry-pi 0 and 3 by matthewbauer · Pull Request #93 · NixOS/nixos-hardware](https://github.com/NixOS/nixos-hardware/pull/93)

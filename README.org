@@ -1,0 +1,34 @@
+* Eric Drechsel's NixOS configs
+  
+This repo contains configurations for my [NixOS](https://nixos.org/) systems. I've been watching NixOS develop from ArchLand for several years, and have decided it's time to make the jump! 
+
+** Sources
+*** davidak/nixos-config https://codeberg.org/davidak/nixos-config (overall structure)
+*** https://github.com/NixOS/nixos-hardware
+* Functionality
+** Profiles
+*** Desktop
+**** TODO Blueman
+*** Emacs
+**** WAITING nativecomp
+     [gccemacs packaging · Issue #87400 · NixOS/nixpkgs](https://github.com/NixOS/nixpkgs/issues/87400)
+** Machines
+*** TODO pidrive
+** Services
+** Network
+*** TODO Wireguard
+**** Nixos and others interop.. how to exchange keys? Shared secret store?
+*** TODO Monitoring
+    https://www.reddit.com/r/NixOS/comments/l84udd/what_do_you_use_for_monitoring/
+    https://christine.website/blog/prometheus-grafana-loki-nixos-2020-11-20
+    https://github.com/NixOS/nixpkgs/tree/master/nixos/modules/services/monitoring
+*** Alerts
+**** TODO Basic
+**** TODO Services down (mutual watch)
+* Research questions
+** TODO Flakes seem to be the future. Need to understand them better
+   https://nixos.wiki/wiki/Flakes
+   https://github.com/NixOS/nixos-hardware#using-nix-flakes-support
+   [~kaction/config#1: Switch repository to Nix Flakes — sourcehut todo](https://todo.sr.ht/~kaction/config/1)
+   
+
