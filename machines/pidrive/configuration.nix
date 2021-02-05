@@ -1,5 +1,17 @@
 { config, pkgs, lib, ... }:
 {
+  imports =
+    [
+      # /etc/nixos/hardware-configuration.nix
+      ../../profiles/hardware.nix
+      ../../profiles/common.nix
+      # ../../profiles/notebook.nix
+      # ../../profiles/desktop.nix
+      # ../../profiles/work.nix
+      # ../../profiles/communication.nix
+      # ../../profiles/development.nix
+    ];
+
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
