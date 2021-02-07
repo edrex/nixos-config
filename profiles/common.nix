@@ -1,6 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nix, ... }:
 
 {
+  nix.package = pkgs.nixUnstable;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
   imports =
     [
       ../services/ssh.nix
@@ -15,42 +20,44 @@
     iotop
     iftop
     git
-    # wget
-    # curl
-    # tcpdump
+    vim
+    wget
+    curl
+    tcpdump
     # whois
     # mtr
     # siege
-    # file
-    # lsof
-    # inotify-tools
-    # strace
-    # gdb
+    file
+    lsof
+    inotify-tools
+    strace
+    gdb
     # xz
     # lz4
     # zip
     # unzip
-    # rsync
+    rsync
     # restic
-    # micro
     # xclip
-    # tealdeer
+    tealdeer
+    tmux
     # screen
     # tree
     # dfc
     # pwgen
-    # jq
+    jq
     # yq
     # gitAndTools.gitFull
   ];
 
   programs.bash.enableCompletion = true;
 
-  # environment.variables = {
-  #   "EDITOR" = "micro";
-  #   "VISUAL" = "micro";
-  # };
+  environment.variables = {
+    "EDITOR" = "vim";
+    "VISUAL" = "vim";
+  };
 
+  # TODO(edrex): what is this for?
   # copy the system configuration into nix-store
   # system.copySystemConfiguration = true;
 }

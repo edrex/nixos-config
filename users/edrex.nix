@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
 {
-  imports =
-    [
-      <home-manager/nixos>
-    ];
+#  imports =
+#    [
+#      <home-manager/nixos>
+#    ];
 
   users.extraUsers.edrex = {
     isNormalUser = true;

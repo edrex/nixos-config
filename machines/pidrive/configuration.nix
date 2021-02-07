@@ -1,6 +1,7 @@
 # https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3
 { config, pkgs, lib, ... }:
 {
+  networking.hostName = pidrive
   imports =
     [
       # /etc/nixos/hardware-configuration.nix
@@ -29,7 +30,7 @@
   networking.wireless.enable = true;
 
   environment.systemPackages = with pkgs; [
-    raspberrypi-tools
+    libraspberrypi
   ];
 
   # sound support
