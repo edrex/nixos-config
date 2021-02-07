@@ -2,16 +2,60 @@
   
 This repo contains configurations for my [NixOS](https://nixos.org/) systems. I've been watching NixOS develop from ArchLand for several years, and have decided it's time to make the jump! 
 
-** Sources
-*** davidak/nixos-config https://codeberg.org/davidak/nixos-config (overall structure)
-*** https://github.com/NixOS/nixos-hardware
-* Functionality
+** Tasks
+*** DONE flakes-enabled nix
+    CLOSED: [2021-02-06 Sat 21:02]
+   https://www.tweag.io/blog/2020-07-31-nixos-flakes/
+*** TODO Add flake.nix for pidrive
+*** TODO Replace nixpkgs channels with flakes
+*** TODO capslock is escape, switch left alt and left meta
+*** TODO home-manager
+    https://github.com/nix-community/home-manager 
+*** TODO Research/Decide where to store secrets
+    - what does the community do (davidak etc)?
+    - Password store integration?
+    - git-crypt
+    https://discourse.nixos.org/t/how-to-setup-user-ssh-keys/5745/6
+*** TODO Setup ssh credentials
+    Is there some nice way to handle key distribution? I think this is a problem for another year.
+*** TODO Sway config
+    - use the wayland overlay
+    - look at op configs (cole?)
+    https://nixos.wiki/wiki/Sway
+    https://github.com/colemickens/nixpkgs-wayland
+
+** Research
+*** Configs
+     https://codeberg.org/davidak/nixos-config (overall structure)
+     https://github.com/colemickens/nixcfg
+     https://github.com/NixOS/nixos-hardware
+
+*** Flakes
+    Flakes seem to be the future. Need to understand them better
+     https://nixos.wiki/wiki/Flakes
+     https://github.com/nrdxp/nixflk
+     https://github.com/NixOS/nixos-hardware#using-nix-flakes-support
+     https://www.reddit.com/r/NixOS/comments/iogoox/homemanager_with_flakes_on_non_nixos_system/
+     [~kaction/config#1: Switch repository to Nix Flakes — sourcehut todo](https://todo.sr.ht/~kaction/config/1)
+   
+*** Home Manager
+    https://www.reddit.com/r/NixOS/comments/j3wvun/what_role_does_home_manager_fill_that_nixos_cant/
+    https://www.google.com/search?q=nix%20home-manager%20and%20flakes
+
 ** Profiles
 *** Desktop
 **** TODO Blueman
 *** Emacs
 **** WAITING nativecomp
      [gccemacs packaging · Issue #87400 · NixOS/nixpkgs](https://github.com/NixOS/nixpkgs/issues/87400)
+**** TODO doom-emacs
+     https://github.com/vlaci/nix-doom-emacs
+     https://github.com/hlissner/doom-emacs 
+     https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org
+     https://github.com/hlissner/doom-emacs/blob/develop/modules/config/default/+evil-bindings.el
+**** org agenda / refile and projectile
+     [[https://shreyas.ragavan.co/post/8f702ce2-8bb7-40a3-b44b-a47222c02909/][Juggling multiple projects and leveraging org-projectile | Shreyas Ragavan]]
+     https://develop.spacemacs.org/layers/+emacs/org/README.html#project-support
 ** Machines
 *** TODO pidrive
 ** Services
@@ -25,10 +69,3 @@ This repo contains configurations for my [NixOS](https://nixos.org/) systems. I'
 *** Alerts
 **** TODO Basic
 **** TODO Services down (mutual watch)
-* Research questions
-** TODO Flakes seem to be the future. Need to understand them better
-   https://nixos.wiki/wiki/Flakes
-   https://github.com/NixOS/nixos-hardware#using-nix-flakes-support
-   [~kaction/config#1: Switch repository to Nix Flakes — sourcehut todo](https://todo.sr.ht/~kaction/config/1)
-   
-
