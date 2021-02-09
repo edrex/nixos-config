@@ -1,7 +1,7 @@
 # https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3
 { config, pkgs, lib, ... }:
 {
-  networking.hostName = pidrive
+  networking.hostName = "pidrive";
   imports =
     [
       # /etc/nixos/hardware-configuration.nix
@@ -27,7 +27,7 @@
   boot.kernelParams = ["cma=32M"];
 
   hardware.enableRedistributableFirmware = true;
-  networking.wireless.enable = true;
+  #networking.wireless.enable = true;
 
   environment.systemPackages = with pkgs; [
     libraspberrypi

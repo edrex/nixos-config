@@ -1,9 +1,5 @@
 { config, pkgs, lib, ... }:
 
-let
-  unstable = import <nixos-unstable> {};
-  inherit (lib) optionals;
-in
 {
   imports =
     [
