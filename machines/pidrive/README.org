@@ -1,15 +1,19 @@
-* Bootstrap checklist
+* DONE Bootstrap checklist
+  CLOSED: [2021-02-05 Fri 14:58] SCHEDULED: <2021-02-05 Fri>
 ** DONE Write latest image
    for now, use 
    https://github.com/NixOS/nixpkgs/issues/97064#issuecomment-759373891
 ** DONE Copy ssh pubkey to ~nixos/.ssh/authorized_keys
 ** DONE Connect via SSH
    CLOSED: [2021-02-05 Fri 00:27]
-** TODO Rsync repo dir over
+** DONE Rsync repo dir over
+   CLOSED: [2021-02-05 Fri 14:58]
 ** DONE sudo ln -s $PWD/configuration.nix /etc/nixos/ 
-** TODO Run nixos-rebuild
+** DONE Run nixos-rebuild
+   CLOSED: [2021-02-05 Fri 14:58]
 * Features
-** m1: prove out my shell env
+** TODO m1: prove out my shell env
+   SCHEDULED: <2021-02-05 Fri>
 *** TODO sway stuff
     use colemickens' overlay prob
     - waybar
