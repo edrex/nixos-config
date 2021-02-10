@@ -2,29 +2,108 @@
   
 This repo contains configurations for my [NixOS](https://nixos.org/) systems. I've been watching NixOS develop from ArchLand for several years, and have decided it's time to make the jump! 
 
-** Tasks
-*** DONE flakes-enabled nix
-    CLOSED: [2021-02-06 Sat 21:02]
-   https://www.tweag.io/blog/2020-07-31-nixos-flakes/
-*** TODO Add flake.nix for pidrive
-*** TODO Replace nixpkgs channels with flakes
+** Chores
+*** DONE [#A] pidrive nixos bootstrap
+    CLOSED: [2021-02-07 Sun 20:03]
+**** DONE [#A] Figure out why ssh pinentry fails to show
+     CLOSED: [2021-02-07 Sun 20:04]
+***** It is on the tty behind sway. This is annoying.
+      I figured it out!!!
+      What works:
+      - systemctl --user restart gpg-agent
+      - gpg-connect-agent updatestartuptty /bye
+      Maybe it's not showing graphically because it doesn't have the env vars
+      `systemctl --user show-environment`
+     
+     [[https://wiki.archlinux.org/index.php/environment_variables][Environment variables - ArchWiki]] 
+     [[https://wiki.archlinux.org/index.php/Systemd/User#Environment_variables][systemd/User - ArchWiki]] 
+    [[https://wiki.gnome.org/Initiatives/Wayland/SessionStart][Initiatives/Wayland/SessionStart - GNOME Wiki!]] 
+*** TODO [#A] bootstrap cobaltsoul
+    Let's try with unstable kernel, maybe the same uboot patches that helped the pi3 will help.
+*** Flakes
+**** DONE flakes-enabled nix
+     CLOSED: [2021-02-06 Sat 21:02]
+    https://www.tweag.io/blog/2020-07-31-nixos-flakes/
+**** DONE Add flake.nix for pidrive
+     CLOSED: [2021-02-09 Tue 11:39]
+**** TODO Single top-level flake with multiple outputs
+**** TODO Replace nixpkgs channels with flakes
+*** TODO Profile for system behind NAT/dynDNS
+**** Cron UPNPc
+**** Cron ddns client
+     inspiration: [[https://code.ulrich.earth/christian/homeserverdns/src/commit/980739cf54456d3b8bd7ce474213c618e29e96b2][christian/homeserverdns - homeserverdns - code.ulrich.earth]] 
+     
+**** TODO Research distributed/p2p discovery/advertising
+***** tor hidden service?
+***** wireguard?
+***** ipfs and dat related stuff
 *** TODO capslock is escape, switch left alt and left meta
 *** TODO home-manager
     https://github.com/nix-community/home-manager 
-*** TODO Research/Decide where to store secrets
+*** DONE SSH agent forwarding
+    CLOSED: [2021-02-09 Tue 12:02]
+    So I can git clone, ssh out, etc
+    Is there some nice way to handle key distribution? I think this is a problem for another year.
+*** TODO Wayland on RPi?
+    Maybe not?
+    [[https://news.ycombinator.com/item?id=19730309][Why don't we have Wayland on Raspberry Pi yet? (2018) | Hacker News]]
+    [[https://github.com/swaywm/wlroots/pull/1214][swaywm/wlroots#1214 Implement basic vulkan renderer by nyorain]] 
+    [[https://github.com/swaywm/wlroots/pull/2648][swaywm/wlroots#2648 WIP: Vulkan allocator by emersion]] 
+    Seems [[https://github.com/Yours3lf/rpi-vk-driver/issues/11][Yours3lf/rpi-vk-driver#11 VK_EXT_image_drm_format_modifier]] might be a path, given the above are committed
+    https://www.raspberrypi.org/documentation/configuration/cmdline-txt.md
+**** TODO The recent graphics work should help, maybe?
+**** 
+*** Sway glitches. Different every time!
+**** On boot:
+**** First start, console freezes, no change, can't switch tty. pkill via ssh. No output.
+**** Next, ran with --debug. Started. On exit, mouse freezes. Switch tty2. 
+    [drm:vc4_bo_create [vc4]] *ERROR* Failed to allocate from CMA: (repeating 1/sec)
+    pkill
+    Output:
+    [EGL] command: eglQuerySurface, error: EGL_BAD_ALLOC (0x3003), message: "dri2_query_buffer_age"
+    [render/egl.c:421] Failed to get EGL surface buffer age
+    (repeated ~1/sec)
+     
+*** TODO Research where to store secrets
     - what does the community do (davidak etc)?
     - Password store integration?
     - git-crypt
+    - https://github.com/mozilla/sops ([[https://github.com/colemickens/nixcfg#secrets][colemickens uses]])
     https://discourse.nixos.org/t/how-to-setup-user-ssh-keys/5745/6
-*** TODO Setup ssh credentials
-    Is there some nice way to handle key distribution? I think this is a problem for another year.
 *** TODO Sway config
     - use the wayland overlay
     - look at op configs (cole?)
     https://nixos.wiki/wiki/Sway
     https://github.com/colemickens/nixpkgs-wayland
+*** TODO Figure out how to bootstrap hostname with flake.nix
+    nixos-rebuild test --flake #pidrive
+    is there any way to set hostname based on nixosSystem key?
+*** TODO [#C]  Bootstrap a test VM on chip
+*** GPG/SSH Agent
+    https://github.com/colemickens/nixcfg/blob/main/mixins/gpg-agent.nix
 
-** Research
+** Someday/Maybe
+*** Idea : coordinated daylight/night mode
+    Idea: a session-wide mode switch which sets optimum color/contrast etc settings
+**** for
+***** Term
+***** Editor
+***** Browser
+***** Gamma
+***** Wayland dynamic shaders
+**** triggered
+***** manually via keybind
+***** automatically by monitoring ambient light level/temp
+
+** Features
+*** TODO [#A] New wordpress host for Lauren
+*** TODO [#B] cobaltsoul Mac OS backup target
+    Research: Time machine or something else? 
+    IMO Time machine is dead now that apple isn't selling dedicated hw 💩
+
+** Resources
+*** Nix / NixOS basics
+    https://nixos.org/guides/nix-pills/functions-and-imports.html
 *** Configs
      https://codeberg.org/davidak/nixos-config (overall structure)
      https://github.com/colemickens/nixcfg
@@ -35,12 +114,20 @@ This repo contains configurations for my [NixOS](https://nixos.org/) systems. I'
      https://nixos.wiki/wiki/Flakes
      https://github.com/nrdxp/nixflk
      https://github.com/NixOS/nixos-hardware#using-nix-flakes-support
-     https://www.reddit.com/r/NixOS/comments/iogoox/homemanager_with_flakes_on_non_nixos_system/
      [~kaction/config#1: Switch repository to Nix Flakes — sourcehut todo](https://todo.sr.ht/~kaction/config/1)
-   
+     https://discourse.nixos.org/t/to-flake-or-not-to-flake/10047/4
+**** Qs
+***** Different nixpkgs per package output (nixosSystem)?
+      https://discourse.nixos.org/t/hostname-based-flake-lock/10578
+***** And Homemanager
+***** Howto boot
 *** Home Manager
     https://www.reddit.com/r/NixOS/comments/j3wvun/what_role_does_home_manager_fill_that_nixos_cant/
     https://www.google.com/search?q=nix%20home-manager%20and%20flakes
+    https://www.reddit.com/r/NixOS/comments/iogoox/homemanager_with_flakes_on_non_nixos_system/
+
+*** Conference Talks
+    [[https://www.youtube.com/c/NixCon/videos][NixCon - YouTube]] 
 
 ** Profiles
 *** Desktop
