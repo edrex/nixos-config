@@ -8,7 +8,7 @@
        };
        silversurfer = nixpkgs.lib.nixosSystem {
          system = "aarch64-linux";
-         modules = [ ./machines/pidrive/configuration.nix ];
+         modules = [ ./machines/silversurfer/configuration.nix ];
        };
      };
   };

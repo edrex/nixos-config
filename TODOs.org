@@ -21,9 +21,6 @@ This repo contains configurations for my [NixOS](https://nixos.org/) systems. I'
     CLOSED: [2021-02-09 Tue 12:02]
     So I can git clone, ssh out, etc
     Is there some nice way to handle key distribution? I think this is a problem for another year.
-*** TODO [#A] bootstrap cobaltsoul
-    https://nixos.wiki/wiki/NixOS_on_ARM/ODROID-HC1
-    Let's try with unstable kernel, maybe the same uboot patches that helped the pi3 will help.
 *** TODO Flakes
 **** DONE flakes-enabled nix
      CLOSED: [2021-02-06 Sat 21:02]
@@ -33,6 +30,7 @@ This repo contains configurations for my [NixOS](https://nixos.org/) systems. I'
 **** DONE Single top-level flake with multiple outputs
      CLOSED: [2021-02-09 Tue 20:02]
 **** TODO Replace nixpkgs channels with flakes
+**** How to deal with generated hardware-config.nix? Commit it? Symlink?
 *** Bootstrap VPS: publicist
 *** Wordpress site on publicist
 ** TODO Epic: Network Foundation
@@ -48,7 +46,11 @@ This repo contains configurations for my [NixOS](https://nixos.org/) systems. I'
 *** TODO Configure all nodes as part of a Wireguard network
 ** TODO Epic: Backups
 *** TODO Syncthing?
-** M3: prove out my shell env
+** TODO Epic: armv7
+*** TODO [#A] bootstrap cobaltsoul
+    https://nixos.wiki/wiki/NixOS_on_ARM/ODROID-HC1
+    Let's try with unstable kernel, maybe the same uboot patches that helped the pi3 will help.
+** TODO M3: prove out my shell env
 *** TODO Bootstrap a test VM on chip
 *** TODO homemanager
     - sway
@@ -138,6 +140,8 @@ This repo contains configurations for my [NixOS](https://nixos.org/) systems. I'
     [[https://techable.com/apple/specs/macbook-pro-core-2-duo-2-16-ghz-15-inch-late-2006/][MacBook Pro | Core 2 Duo 2.16 GHz | 15 Inch | Late 2006 - Techable.com]] 
     | Apple Model Number | A1211 (EMC 2120) |
     | Model ID           | MacBook Pro 2.2  |
+*** TODO look into whether modeset issue is fixable
+    can replace graphics card sep from mobo?
 *** DONE Research issue with 64bit
     Issue is 32bit EFI with 64bit OS
 *** DONE Make 32bit min usb
@@ -172,10 +176,9 @@ This repo contains configurations for my [NixOS](https://nixos.org/) systems. I'
     
 *** DONE set nomodeset in grub
     CLOSED: [2021-02-17 Wed 23:14]
-*** TODO Bootstrap nixos-confifg
+*** DONE Bootstrap nixos-config
+    CLOSED: [2021-02-18 Thu 02:40]
     ssh copy, add a new flake output, and run it
-*** TODO "bless" partition so it boots faster
-*** TODO look into whether modeset issue is fixable
 *** OT: interesting, later OSX releases:
     http://forum.netkas.org/index.php?topic=7505.0
 *** TODO ? Add to https://github.com/NixOS/nixos-hardware/tree/master/apple/macbook-pro

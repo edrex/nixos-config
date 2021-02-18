@@ -4,9 +4,7 @@
   networking.hostName = "pidrive";
   imports =
     [
-      # /etc/nixos/hardware-configuration.nix
       ../../profiles/hardware.nix
-      ../../profiles/common.nix
       ../../profiles/desktop.nix
       # ../../profiles/notebook.nix
       # ../../profiles/work.nix

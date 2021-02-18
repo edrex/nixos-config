@@ -8,6 +8,7 @@
       # ../services/avahi-server.nix
       # ../services/avahi-client.nix
       # ../services/fonts
+      ./common.nix
       ../users/edrex.nix
     ];
 
