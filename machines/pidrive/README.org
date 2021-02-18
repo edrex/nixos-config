@@ -11,23 +11,26 @@
 ** DONE sudo ln -s $PWD/configuration.nix /etc/nixos/ 
 ** DONE Run nixos-rebuild
    CLOSED: [2021-02-05 Fri 14:58]
-* Features
-** TODO m1: prove out my shell env
-   SCHEDULED: <2021-02-05 Fri>
-*** TODO sway stuff
-    use colemickens' overlay prob
-    - waybar
-    - wofi
-    - wlr-randr
-    - kanshi
-*** TODO homemanager
-    - sway
-    - spacemacs
-*** spacemacs
-    use a "link farm": [[https://discourse.nixos.org/t/home-manager-spacemacs/8033/4][Home-manager & spacemacs - #4 by theotherjimmy - Learn - NixOS Discourse]] 
-** m2
-*** TODO Wireguard
-*** TODO Syncthing
+* Issues
+** TODO Wayland on RPi?
+   Maybe not?
+   [[https://news.ycombinator.com/item?id=19730309][Why don't we have Wayland on Raspberry Pi yet? (2018) | Hacker News]]
+   [[https://github.com/swaywm/wlroots/pull/1214][swaywm/wlroots#1214 Implement basic vulkan renderer by nyorain]] 
+   [[https://github.com/swaywm/wlroots/pull/2648][swaywm/wlroots#2648 WIP: Vulkan allocator by emersion]] 
+   Seems [[https://github.com/Yours3lf/rpi-vk-driver/issues/11][Yours3lf/rpi-vk-driver#11 VK_EXT_image_drm_format_modifier]] might be a path, given the above are committed
+   https://www.raspberrypi.org/documentation/configuration/cmdline-txt.md
+*** TODO The recent graphics work should help, maybe?
+*** Sway glitches. Different every time!
+**** On boot:
+**** First start, console freezes, no change, can't switch tty. pkill via ssh. No output.
+**** Next, ran with --debug. Started. On exit, mouse freezes. Switch tty2. 
+    [drm:vc4_bo_create [vc4]] *ERROR* Failed to allocate from CMA: (repeating 1/sec)
+    pkill
+    Output:
+    [EGL] command: eglQuerySurface, error: EGL_BAD_ALLOC (0x3003), message: "dri2_query_buffer_age"
+    [render/egl.c:421] Failed to get EGL surface buffer age
+    (repeated ~1/sec)
+     
 * References
 ** https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3
 ** TODO Evaluate [add raspberry-pi 0 and 3 by matthewbauer · Pull Request #93 · NixOS/nixos-hardware](https://github.com/NixOS/nixos-hardware/pull/93)
