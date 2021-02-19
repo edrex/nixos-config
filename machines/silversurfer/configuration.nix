@@ -31,7 +31,6 @@
   boot.kernelParams = ["nomodeset"];
   
   networking.hostName = "silversurfer"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   networking.interfaces.enp2s0.useDHCP = true;
   networking.interfaces.wls1.useDHCP = true;
