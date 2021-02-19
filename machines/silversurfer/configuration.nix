@@ -8,8 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../profiles/hardware.nix
-      ../../profiles/desktop.nix
+      ../../profiles/laptop.nix
     ];
 
   # Grub to work around 32 bit efi
@@ -24,6 +23,10 @@
       forcei686 = true;
     };
   };
+  # nixpkgs.config.packageOverrides = pkgs: {
+  #   grub2 = (import <nixpkgs> {system = "i686-linux";}).grub2;
+  # };
+
   # modeset is crashing. hw or sw?
   boot.kernelParams = ["nomodeset"];
   

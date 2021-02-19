@@ -13,3 +13,4 @@
      };
   };
 }
+#TODO: maybe map machine configs to outputs like https://www.reddit.com/r/NixOS/comments/j4k2zz/does_anyone_use_flakes_to_manage_their_entire/g7jrqcn/?context=3

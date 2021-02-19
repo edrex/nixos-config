@@ -1,147 +1,134 @@
-* Eric Drechsel's NixOS configs
-This repo contains configurations for my [NixOS](https://nixos.org/) systems. I've been watching NixOS develop from ArchLand for several years, and have decided it's time to make the jump! 
-* Tasks
-** TODO Epic: Scale the first NixOS "Learning cliff"
-*** DONE [#A] pidrive nixos bootstrap
-    CLOSED: [2021-02-07 Sun 20:03]
-**** DONE [#A] Figure out why ssh pinentry fails to show
-     CLOSED: [2021-02-07 Sun 20:04]
-***** It is on the tty behind sway. This is annoying.
-      I figured it out!!!
-      What works:
-      * systemctl --user restart gpg-agent
-      * gpg-connect-agent updatestartuptty /bye
-      Maybe it's not showing graphically because it doesn't have the env vars
-      `systemctl --user show-environmenty`
+* TODO Epic: Scale the first NixOS "Learning cliff"
+** DONE [#A] pidrive nixos bootstrap
+   CLOSED: [2021-02-07 Sun 20:03]
+*** DONE [#A] Figure out why ssh pinentry fails to show
+    CLOSED: [2021-02-07 Sun 20:04]
+**** It is on the tty behind sway. This is annoying.
+     I figured it out!!!
+     What works:
+     * systemctl --user restart gpg-agent
+     * gpg-connect-agent updatestartuptty /bye
+     Maybe it's not showing graphically because it doesn't have the env vars
+     `systemctl --user show-environmenty`
      
-     [[https://wiki.archlinux.org/index.php/environment_variables][Environment variables - ArchWiki]] 
-     [[https://wiki.archlinux.org/index.php/Systemd/User#Environment_variables][systemd/User - ArchWiki]] 
-    [[https://wiki.gnome.org/Initiatives/Wayland/SessionStart][Initiatives/Wayland/SessionStart - GNOME Wiki!]] 
-*** DONE SSH agent forwarding
-    CLOSED: [2021-02-09 Tue 12:02]
-    So I can git clone, ssh out, etc
-    Is there some nice way to handle key distribution? I think this is a problem for another year.
-*** TODO Flakes
-**** DONE flakes-enabled nix
-     CLOSED: [2021-02-06 Sat 21:02]
-    https://www.tweag.io/blog/2020-07-31-nixos-flakes/
-**** DONE Add flake.nix for pidrive
-     CLOSED: [2021-02-09 Tue 11:39]
-**** DONE Single top-level flake with multiple outputs
-     CLOSED: [2021-02-09 Tue 20:02]
-**** TODO Replace nixpkgs channels with flakes
-**** How to deal with generated hardware-config.nix? Commit it? Symlink?
-*** Bootstrap VPS: publicist
-*** Wordpress site on publicist
-** TODO Epic: Network Foundation
-*** TODO Decide how to deploy secrets
-    - what does the community do (davidak etc)?
-    - Password store integration?
-    - git-crypt
-    - https://christine.website/blog/nixos-encrypted-secrets-2021-01-20
-    - https://github.com/mozilla/sops ([[https://github.com/colemickens/nixcfg#secrets][colemickens uses]])
-    - https://github.com/Mic92/sops-nix
-    - https://www.reddit.com/r/NixOS/comments/j6nqbe/declarative_secrets/
-    https://discourse.nixos.org/t/how-to-setup-user-ssh-keys/5745/6
-*** TODO Configure all nodes as part of a Wireguard network
-** TODO Epic: Backups
-*** TODO Syncthing?
-** TODO Epic: armv7
-*** TODO [#A] bootstrap cobaltsoul
-    https://nixos.wiki/wiki/NixOS_on_ARM/ODROID-HC1
-    Let's try with unstable kernel, maybe the same uboot patches that helped the pi3 will help.
-** TODO M3: prove out my shell env
-*** TODO Bootstrap a test VM on chip
-*** TODO homemanager
-    - sway
-    - spacemacs
-*** TODO sway stuff
-    use colemickens' overlay prob
-    - waybar
-    - wofi
-    - wlr-randr
-    - kanshi
-*** TODO Sway config
-    - use the wayland overlay
-    - look at op configs (cole?)
-    https://nixos.wiki/wiki/Sway
-    https://github.com/colemickens/nixpkgs-wayland
-*** TODO capslock is escape, switch left alt and left meta
-*** TODO home-manager
-    https://github.com/nix-community/home-manager 
-*** Emacs
-**** WAITING nativecomp
-     [gccemacs packaging · Issue #87400 · NixOS/nixpkgs](https://github.com/NixOS/nixpkgs/issues/87400)
-**** TODO doom-emacs
-     https://github.com/vlaci/nix-doom-emacs
-     https://github.com/hlissner/doom-emacs 
-     https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org
-     https://github.com/hlissner/doom-emacs/blob/develop/modules/config/default/+evil-bindings.el
-**** org agenda / refile and projectile
-     [[https://shreyas.ragavan.co/post/8f702ce2-8bb7-40a3-b44b-a47222c02909/][Juggling multiple projects and leveraging org-projectile | Shreyas Ragavan]]
-     https://develop.spacemacs.org/layers/+emacs/org/README.html#project-support
-** TODO Figure out how to bootstrap hostname with flake.nix
-   nixos-rebuild test --flake #pidrive
-   is there any way to set hostname based on nixosSystem key?
-** GPG/SSH Agent
-   https://github.com/colemickens/nixcfg/blob/main/mixins/gpg-agent.nix
+    [[https://wiki.archlinux.org/index.php/environment_variables][Environment variables - ArchWiki]] 
+    [[https://wiki.archlinux.org/index.php/Systemd/User#Environment_variables][systemd/User - ArchWiki]] 
+   [[https://wiki.gnome.org/Initiatives/Wayland/SessionStart][Initiatives/Wayland/SessionStart - GNOME Wiki!]] 
+** DONE SSH agent forwarding
+   CLOSED: [2021-02-09 Tue 12:02]
+   So I can git clone, ssh out, etc
+   Is there some nice way to handle key distribution? I think this is a problem for another year.
+** TODO Flakes
+*** DONE flakes-enabled nix
+    CLOSED: [2021-02-06 Sat 21:02]
+   https://www.tweag.io/blog/2020-07-31-nixos-flakes/
+*** DONE Add flake.nix for pidrive
+    CLOSED: [2021-02-09 Tue 11:39]
+*** DONE Single top-level flake with multiple outputs
+    CLOSED: [2021-02-09 Tue 20:02]
+*** DONE Decide how to deal with generated hardware-config.nix? Commit it.
+    CLOSED: [2021-02-18 Thu 11:32]
+*** DONE Figure out how to bootstrap hostname with flake.nix
+    CLOSED: [2021-02-18 Thu 11:32]
+    nixos-rebuild test --flake #pidrive
+    is there any way to set hostname based on nixosSystem key?
+    need to enable flakes anyway so running manually with 
+        NIXOS_CONFIG=machines/name/configuration.nix nixos-rebuild switch
+    but this doesn't pin package versions   
+**** Bootstrap VPS: publicist
+**** Wordpress site on publicist
+*** TODO Replace nixpkgs channels with flakes
+* TODO Epic: Network Foundation
+** TODO Decide how to deploy secrets
+   - what does the community do (davidak etc)?
+   - Password store integration?
+   - git-crypt
+   - https://christine.website/blog/nixos-encrypted-secrets-2021-01-20
+   - https://github.com/mozilla/sops ([[https://github.com/colemickens/nixcfg#secrets][colemickens uses]])
+   - https://github.com/Mic92/sops-nix
+   - https://www.reddit.com/r/NixOS/comments/j6nqbe/declarative_secrets/
+   https://discourse.nixos.org/t/how-to-setup-user-ssh-keys/5745/6
+** TODO Configure all nodes as part of a Wireguard network
+* TODO Hardware basics
+** TODO capslock is escape, switch left alt and left meta
+** Hard drive
+** Power management
+   https://discourse.nixos.org/t/fan-keeps-spinning-with-a-base-installation-of-nixos/1394/3?u=edrex
+** Bluetooth
+** Wifi
+* TODO Epic: Backups
+** TODO Syncthing?
+* TODO Epic: armv7
+** TODO [#A] bootstrap cobaltsoul
+   https://nixos.wiki/wiki/NixOS_on_ARM/ODROID-HC1
+   Let's try with unstable kernel, maybe the same uboot patches that helped the pi3 will help.
+* TODO M3: prove out my shell env
+** TODO Bootstrap a test VM on chip
+** TODO homemanager
+   - sway
+   - spacemacs
+** TODO sway stuff
+   use colemickens' overlay prob
+   - waybar
+   - wofi
+   - wlr-randr
+   - kanshi
+** TODO Sway config
+   - use the wayland overlay
+   - look at op configs (cole?)
+   https://nixos.wiki/wiki/Sway
+   https://github.com/colemickens/nixpkgs-wayland
+** TODO home-manager
+   https://github.com/nix-community/home-manager 
+** Emacs
+*** WAITING nativecomp
+    [gccemacs packaging · Issue #87400 · NixOS/nixpkgs](https://github.com/NixOS/nixpkgs/issues/87400)
+*** TODO doom-emacs
+    https://github.com/vlaci/nix-doom-emacs
+    https://github.com/hlissner/doom-emacs 
+    https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org
+    https://github.com/hlissner/doom-emacs/blob/develop/modules/config/default/+evil-bindings.el
+*** org agenda / refile and projectile
+    [[https://shreyas.ragavan.co/post/8f702ce2-8bb7-40a3-b44b-a47222c02909/][Juggling multiple projects and leveraging org-projectile | Shreyas Ragavan]]
+    https://develop.spacemacs.org/layers/+emacs/org/README.html#project-support
+* GPG/SSH Agent
+  https://github.com/colemickens/nixcfg/blob/main/mixins/gpg-agent.nix
 
+
+  
 * Features
 ** TODO [#A] New wordpress host for Lauren
 ** TODO [#B] cobaltsoul Mac OS backup target
    Research: Time machine or something else? 
    Seems time machine bug "error 92" is fixed, so let's keep using time machine (over NFS)
-* Resources
-** Nix / NixOS basics
-   https://nixos.org/guides/nix-pills/functions-and-imports.html
-   https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector
-** Terminology
-   [[https://stephank.nl/p/2020-06-01-a-nix-primer-by-a-newcomer.html][A Nix terminology primer by a newcomer]] 
-** Configs
-    https://codeberg.org/davidak/nixos-config (overall structure)
-    https://github.com/colemickens/nixcfg
-    https://github.com/NixOS/nixos-hardware
-
-** Flakes
-   seem to be the future. Need to understand them better
-    https://nixos.wiki/wiki/Flakes
-    https://github.com/NixOS/nixos-hardware#using-nix-flakes-support
-    [~kaction/config#1: Switch repository to Nix Flakes — sourcehut todo](https://todo.sr.ht/~kaction/config/1)
-    https://discourse.nixos.org/t/to-flake-or-not-to-flake/10047/4
-   
-*** nixos configs 
-    https://github.com/nrdxp/nixflk
-    [[https://blog.ysndr.de/posts/internals/2021-01-01-flake-ification/][y|sndr - Building with Nix Flakes for, eh .. reasons!]] 
-    
-*** Qs
-**** Different nixpkgs per package output (nixosSystem)?
-     https://discourse.nixos.org/t/hostname-based-flake-lock/10578
-**** And Homemanager
-**** Howto boot
-** Home Manager
-   https://www.reddit.com/r/NixOS/comments/j3wvun/what_role_does_home_manager_fill_that_nixos_cant/
-   https://www.google.com/search?q=nix%20home-manager%20and%20flakes
-   https://www.reddit.com/r/NixOS/comments/iogoox/homemanager_with_flakes_on_non_nixos_system/
-
-** Conference Talks
-   [[https://www.youtube.com/c/NixCon/videos][NixCon - YouTube]] 
-
-** Direnv
-   https://github.com/nix-community/nix-direnv
-
 * Profiles
 ** Desktop
 *** TODO Blueman
 * Machines
 ** DONE pidrive
    CLOSED: [2021-02-11 Thu 15:11]
-** TODO silversurfer
+** silversurfer
 *** DONE Look up model info
     [[https://techable.com/apple/specs/macbook-pro-core-2-duo-2-16-ghz-15-inch-late-2006/][MacBook Pro | Core 2 Duo 2.16 GHz | 15 Inch | Late 2006 - Techable.com]] 
     | Apple Model Number | A1211 (EMC 2120) |
     | Model ID           | MacBook Pro 2.2  |
-*** TODO look into whether modeset issue is fixable
-    can replace graphics card sep from mobo?
+    [[https://www.ifixit.com/Device/MacBook_Pro_15%22_Core_2_Duo_Model_A1211][MacBook Pro 15" Core 2 Duo Model A1211 - iFixit]] 
+    https://en.wikipedia.org/wiki/Radeon_X1000_series
+    http://www.vgamuseum.info/index.php/cpu/item/640-ati-radeon-x1600-xt
+    01:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] RV530/M56-P [Mobility Radeon X1600]
+        Subsystem: Apple Inc. MacBook Pro
+        Kernel modules: radeon
+*** TODO fix modeset issue
+    Best summary of steps needed:
+     - [[https://bbs.archlinux.org/viewtopic.php?pid=1810437#p1810437][Load custom Radeon firmware for Macbook Pro / Kernel & Hardware / Arch Linux ...]] 
+     - http://www.andreasbaumann.cc/blog/archlinux-macbook-a1211/
+     
+     Also:
+     [[https://forum.artixlinux.org/index.php/topic,586.0.html][{SOLVED} 32bit Mac EFI doesn't expose vbios in UEFI mode]] 
+     [[https://bugs.freedesktop.org/show_bug.cgi?id=26891#c3][26891 – Radeon KMS fails with inaccessible AtomBIOS on systems with (U)EFI boot]]  
+*** TODO Bless EFI partition with macos installer disk
+    [[https://mattgadient.com/reducing-the-30-second-delay-when-starting-64-bit-ubuntu-in-bios-mode-on-the-old-32-bit-efi-macs/][Reducing the 30 second delay when starting 64-bit Ubuntu in BIOS mode on the ...]] 
+*** 
 *** DONE Research issue with 64bit
     Issue is 32bit EFI with 64bit OS
 *** DONE Make 32bit min usb

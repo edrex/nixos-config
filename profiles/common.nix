@@ -56,8 +56,4 @@
     "EDITOR" = "vim";
     "VISUAL" = "vim";
   };
-
-  # TODO(edrex): what is this for?
-  # copy the system configuration into nix-store
-  # system.copySystemConfiguration = true;
 }
