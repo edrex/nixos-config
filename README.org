@@ -1,9 +1,13 @@
 * Eric Drechsel's NixOS configs
-This repo contains configurations for my [NixOS](https://nixos.org/) systems. I've been watching NixOS develop from ArchLand for several years, and have decided it's time to make the jump! 
+Configurations for my [[https://nixos.org/][NixOS]] systems.
+
+Having watched NixOS come together from my aging Arch install and mess of Debian servers for several years, I'm finally making the jump!
+
 * Resources
 ** Nix / NixOS basics
-   https://nixos.org/guides/nix-pills/functions-and-imports.html
-   https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector
+https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector
+*** Nix language
+https://nixos.org/guides/nix-pills/functions-and-imports.html
 ** Terminology
    [[https://stephank.nl/p/2020-06-01-a-nix-primer-by-a-newcomer.html][A Nix terminology primer by a newcomer]] 
 ** Configs
@@ -15,11 +19,12 @@ This repo contains configurations for my [NixOS](https://nixos.org/) systems. I'
     https://github.com/colemickens/nixcfg
     https://github.com/NixOS/nixos-hardware
 
+    User envs:
+    StumpWM/emacs: [[https://github.com/TLATER/dotfiles][TLATER/dotfiles]]
+
 ** Flakes
    seem to be the future. Need to understand them better
     https://nixos.wiki/wiki/Flakes
-    https://github.com/NixOS/nixos-hardware#using-nix-flakes-support
-    [~kaction/config#1: Switch repository to Nix Flakes — sourcehut todo](https://todo.sr.ht/~kaction/config/1)
     https://discourse.nixos.org/t/to-flake-or-not-to-flake/10047/4
    
 *** nixos configs 
