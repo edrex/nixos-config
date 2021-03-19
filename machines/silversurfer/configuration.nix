@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -11,25 +11,6 @@
       ../../profiles/laptop.nix
     ];
 
-  # Grub to work around 32 bit efi
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = false;
-    };
-    grub = {
-      efiSupport = true;
-      efiInstallAsRemovable = true;
-      device = "nodev";
-      forcei686 = true;
-    };
-  };
-  # nixpkgs.config.packageOverrides = pkgs: {
-  #   grub2 = (import <nixpkgs> {system = "i686-linux";}).grub2;
-  # };
-
-  # modeset is crashing. hw or sw?
-  boot.kernelParams = ["nomodeset"];
-  
   networking.hostName = "silversurfer"; # Define your hostname.
 
   networking.interfaces.enp2s0.useDHCP = true;

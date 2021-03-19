@@ -1,0 +1,150 @@
+* WAITING coboltsoul and bookmobile (armv7 builds are a lot more work)
+  https://nixos.wiki/wiki/NixOS_on_ARM/ODROID-HC1
+  Let's try with unstable kernel, maybe the same uboot patches that helped the pi3 will help.
+  
+   Waiting on:
+   - Get some experience setting up easier systems
+   - Get TTL-USB cable
+
+   
+   patagonicus shared his build config: https://cloud.breab.org/index.php/s/N3HGqzCeMcitLgB
+   he says he bisected and found this commit breaks boot: https://github.com/NixOS/nixpkgs/commit/9c213398b312e0f0bb9cdf05090fd20223a82ad0
+   :CHATLOG:
+patagonicus
+Hi. I managed to build and test a modified multiplatform image: http://cloud.breab.org/index.php/s/N3HGqzCeMcitLgB
+Just uncompress, write to a MicroSD card, then add the bootloader on top based on the commands on the wiki. It should get an address via DHCP and allow login over SSH with nixos/nixos
+I'm also trying to make an export of the full system from the nix store including the build deps so you can change stuff without having to recompile everything, but that will be … a bit bigger. And currently it's complaining about "file too large" and I don't really know why.
+Ok, works, mostly, only small problem is that there's no git on the image, so you'll have to git clone from the bare repo on another machine and then copy that over so you can use that nixpkgs for building stuff - like git.
+edrex
+people are posting their cachix keys on the NixOS_on_Arm wiki page, but without package listings it seems pretty useless. Would it be a ton of work to set up a little armv7 hydra for a subset of packages? Use flakes to build images with exact nixpkgs etc?
+Where I'm at in learning / deploying nixos rn: https://github.com/edrex/nixos-config
+patagonicus
+I think the main problems are that there's no one that wants to maintain armv7l build machines + fixing problems and that there aren't many good machines running armv7 that you can put in a data center.
+So, in the link I gave above there's the minimal config I used to build the system. I also need to move my fixes that I have on top of nixpkgs out of the repo and instead into an overlay, which would make stuff a lot nicer - then I can also just reference a specific commit in the config and have nix pull it automatically.
+edrex
+Should be able to run armv7 containers/vms on an aarch64 host os
+patagonicus
+I think there's still a small difference, but I don't exactly remember.
+I'm willing to throw money at nixos for armv7l support, but there doesn't seem to be a way for that. :D
+edrex
+ok, IDK if i'll be able to dig into this today because I have some outdoor chores to do before big snow/coldsnap hits west coast.
+I'm going to take the hc1 i have here with me, so I can keep tinkering with it.
+patagonicus
+No worries. There's more people running armv7l in the chat room and I think one or two with HC1/2s as well.
+edrex
+I'll have a look. It would be awesome if we could find a sane/sustainable/sharable way to share package builds going forward
+patagonicus
+Yeah. Someone was recently talking on #nixos-chat about setting up a community cache. I've considered making my stuff available, but as you said, it only works if everyone uses the same nixpkgs and similar configs.
+edrex
+thanks so much for engaging with me :) i will try to be a net positive
+patagonicus
+:D
+I'm always happy to help. And I would have never gotten my machines running without people from the chat room.
+edrex
+flakes seem like a big step forward in making that easier, right? we can all just pin nixpkgs for our base system in system flake? and then vary it per-input if we need something newer?
+alright, i'll let you get offline :D
+patagonicus
+I've never really looked into flakes, but I've manually pinned nixpkgs before, it's not complicated. So we could have a common file you import that specifies nixpkgs and a few settings.
+   :END:
+   :CHATLOG:
+edrex (@edrex:matrix.org)
+patagonicus heey, i'm just about to attempt nixos install on an odroid hc1. Last time I tried (a few months back, following your instructions on the wiki), it wouldn't boot (and I don't have a TTL-USB cable to look at the UART rn). So if you're still around I might HYU with Qs..
+patagonicus
+edrex: sure, I can help with that. I also woke up like 15mins ago, so I might not give the best advice for the next hour or so. :D
+edrex (@edrex:matrix.org)
+:D
+patagonicus
+The main problem I can see is that nixpkgs often doesn't compile on armv7l. I've already spent a week going from early December to something more recent and it doesn't work. And my current problem is that it doesn't boot …
+I think my recommendation would be to use nixpkgs at 26cc536edf2 and to cherry-pick b70430a3ddf8f9153606c4e5aa8034cf361c709b on top of that. That is roughly what I'm currently running on my HC2s.
+And I still haven't documented how to make the HDDs properly shut down when you reboot/power off …
+edrex (@edrex:matrix.org)
+i am just tackling the first NixOS learning cliff this week, so I only 2/3 understand what you're talking about with nixpkgs. Do you mean a week compiling on device?
+they keep spinning when you halt the system?
+so you have an HC1 that currently doesn't boot and HC2s that work? You use the HC1 to test configs first?
+i have 2 HC1s
+patagonicus
+Well, compiling, failing, then changing something and compiling again. Building my system on my devices takes about 24h or a bit less. I have four HC2s with distributed compiling, but a lot of the compile time comes from packages that are needed for all later packages, so I'm actually not sure how much faster it is compared to a single machine.
+I don't have any HC1s, but AFAIK the only difference is the metal they are mounted on, exactly the same board for the electronics.
+And they all boot, just not if I try to switch to a newer version of nixpkgs.
+For the HDDs it's a known problem that they don't automatically spin them down: https://wiki.odroid.com/odroid-xu4/troubleshooting/shutdown_script
+
+odroid-xu4:troubleshooting:shutdown_script [ODROID Wiki]
+You are here odroid-xu4 troubleshooting shutdown_script Trace shutdown_script odroid-xu4:troubleshooting:shutdown_script Show pagesource
+edrex (@edrex:matrix.org)
+don't the HC2s run on 12V power?
+patagonicus
+I've codified that into my configuration.nix
+Ah, yes. Ok, then they are different, I guess. But that shouldn't matter for nix.
+edrex (@edrex:matrix.org)
+thanks! Adding to my notes
+but yeah, my impression that other than the drive power they are identical
+patagonicus
+You are probably crosscompiling currently, right? Or are you building on the HC1 from a different Linux? As long as you find something to install Nix on it should work.
+Just note that it will take a decent amount of disk space (I wouldn't try it on a MicroSD card smaller than 32GB unless you put /nix on the HDD/SSD) and you'll need at least a few gigs of swap space.
+edrex (@edrex:matrix.org)
+IDK yet. still figuring stuff out
+What about native compiling under QEMU on a fast amd64?
+patagonicus
+Hmm, good question. It's probably slower than cross-compiling on the same machine, but on the other hand it would not be cross-compiling, so it would save you the trouble of having to recompile everything on the machine once you have it booted up and want to change the system.
+I haven't tried. I managed to bootstrap by cross compiling and since then only compiled natively on NixOS.
+edrex (@edrex:matrix.org)
+I may not have the nix chops yet to execute this successfully. I was hoping to get it bootstrapped to the point where I can continue remotely over SSH (i leave arm NASes at my friends' houses like Johnny Homeserver-seed, and I'm only here till tomorrow eve)
+patagonicus
+Oh, that's a bit short as compiling everything takes a while. I could see if I can build you an SD card image to get it booted up, but you'd still have to configure afterwards.
+edrex (@edrex:matrix.org)
+I'll give it a go and see if it boots at least :D
+thanks
+patagonicus
+And, yeah, I don't really trust the machines yet to run them without physical access, but I'm considering wiring up UART in a loop and getting some "smart" power plugs so I can power cycle them. It's unlikely to break so bad I can't just boot an older NixOS generation, so that should get me out of most problems.
+edrex (@edrex:matrix.org)
+Did you resolve the "no SATA on reboot" issue mentioned on the wiki? Debian wiki says a firmware flash might fix it
+https://wiki.debian.org/InstallingDebianOn/OdroidHC1
+
+InstallingDebianOn/OdroidHC1 - Debian Wiki
+How to install Debian/Linux on a Odroid HC1
+Yeah, I spent some time researching different auto-rollback options on different embedded linuxes a couple months ago. It would be cool if nixos knew how to roll back to the last successful boot if it didn't come all the way up to network. There are some issues discussing it.
+Watchdog timer
+patagonicus
+Ah. The fix for that is to use the Hardkernel fork of the kernel, it's in nixpkgs, although not quite the newest version. But maybe it works in mainline by now? Haven't tried in a while.
+edrex (@edrex:matrix.org)
+i was hoping to get mainline working. but maybe that's too much
+patagonicus
+Ok, I managed to slightly modify the multiplatform sd image from nixpkgs to not require a ton of (re)builds, but it'll still take a bit to build.
+Yesterday
+clever
+,stty
+{^_^}
+echo "stty rows $(tput lines) cols $(tput cols)"
+patagonicus
+Oh, no. I'm almost done with bisecting and I don't see anything in the remaining commits that should affecting booting at all. :(
+Wait. Could it be a uboot/kernel mismatch? Maybe because of dtbs or something? But I'm pretty sure I tried a fully clean install on the version that didn't work and that didn't help.
+patagonicus
+Oof. I think I've been holding nix-build-status wrong. -_-
+patagonicus
+Yay, found it: https://github.com/NixOS/nixpkgs/commit/9c213398b312e0f0bb9cdf05090fd20223a82ad0 Makes more sense now, since that one is changing stuff related to the kernel. Now I have something to diff. :)
+
+lib: Clean up how linux and gcc config is specified · NixOS/nixpkgs@9c21339 - GitHub
+Second attempt of 8929989614589ee3acd070a6409b2b9700c92d65; see that commit for details. This reverts commit 0bc275e63423456d6deb650e146120c39c1e0723.
+red[evilred]
+oh wow, 5.6k messages since I've looked at this channel
+it's been a while apparently :-(
+edrex (@edrex:matrix.org)
+[patagonicus](https://matrix.to/#/@freenode_patagonicus:matrix.org): that's the commit that broke boot for you? great sluething!
+patagonicus
+edrex: I just had to bisect a few ten thousand commits. :D
+It seems to lose the hostPlatform extraConfig, although I don't understand why. The hostPlatform extraConfig for armv7 has one markerd as "Odroid XU4 hangs without this" and I'm using Odroid HC2s, which are almost identical …
+edrex (@edrex:matrix.org)
+what was your test procedure for each commit? fully generate an image, flash, try to boot?
+patagonicus
+Yes, unfortunately.
+I'm not sure why I couldn't reproduce it by just replacing the kernel.
+I did minimize the image a bit, but it still took forever to build - building just the kernel would have been … a bit faster.
+   :END:
+** u-boot 
+   https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/misc/odroid-xu3-bootloader/default.nix
+   Mainline might work with a firmware update, see: https://wiki.debian.org/InstallingDebianOn/OdroidHC1
+   https://wiki.odroid.com/odroid-xu4/software/jms578_fw_update
+** TODO cross compiling with qemu
+   https://landley.net/aboriginal/presentation.html
+
+   https://nixos.wiki/wiki/User:Samueldr/NixOS_on_ARM

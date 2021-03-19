@@ -1,14 +1,21 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  outputs = { self, nixpkgs }: {
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "path:./nixos-hardware"; # TODO: this is temp while I'm working on a branch
+  };
+
+  outputs = { self, ... }@inputs: {
      nixosConfigurations = {
-       pidrive = nixpkgs.lib.nixosSystem {
+       pidrive = inputs.nixpkgs.lib.nixosSystem {
          system = "aarch64-linux";
          modules = [ ./machines/pidrive/configuration.nix ];
        };
-       silversurfer = nixpkgs.lib.nixosSystem {
+       silversurfer = inputs.nixpkgs.lib.nixosSystem {
          system = "x86_64-linux";
-         modules = [ ./machines/silversurfer/configuration.nix ];
+         modules = [
+           ./machines/silversurfer/configuration.nix
+           inputs.nixos-hardware.nixosModules.apple-macbook-pro-2-1
+         ];
        };
      };
   };

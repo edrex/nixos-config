@@ -1,0 +1,63 @@
+** silversurfer
+*** DONE Look up model info
+    [[https://techable.com/apple/specs/macbook-pro-core-2-duo-2-16-ghz-15-inch-late-2006/][MacBook Pro | Core 2 Duo 2.16 GHz | 15 Inch | Late 2006 - Techable.com]] 
+    | Apple Model Number | A1211 (EMC 2120) |
+    | Model ID           | MacBook Pro 2.2  |
+    [[https://www.ifixit.com/Device/MacBook_Pro_15%22_Core_2_Duo_Model_A1211][MacBook Pro 15" Core 2 Duo Model A1211 - iFixit]] 
+    https://en.wikipedia.org/wiki/Radeon_X1000_series
+    http://www.vgamuseum.info/index.php/cpu/item/640-ati-radeon-x1600-xt
+    01:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] RV530/M56-P [Mobility Radeon X1600]
+        Subsystem: Apple Inc. MacBook Pro
+        Kernel modules: radeon
+*** TODO fix modeset issue
+    Best summary of steps needed:
+     - [[https://bbs.archlinux.org/viewtopic.php?pid=1810437#p1810437][Load custom Radeon firmware for Macbook Pro / Kernel & Hardware / Arch Linux ...]] 
+     - http://www.andreasbaumann.cc/blog/archlinux-macbook-a1211/
+     
+     Also:
+     [[https://forum.artixlinux.org/index.php/topic,586.0.html][{SOLVED} 32bit Mac EFI doesn't expose vbios in UEFI mode]] 
+     [[https://bugs.freedesktop.org/show_bug.cgi?id=26891#c3][26891 – Radeon KMS fails with inaccessible AtomBIOS on systems with (U)EFI boot]]
+**** TODO Build custom kernel with Andrew's patch
+*** TODO Bless EFI partition with macos installer disk
+    [[https://mattgadient.com/reducing-the-30-second-delay-when-starting-64-bit-ubuntu-in-bios-mode-on-the-old-32-bit-efi-macs/][Reducing the 30 second delay when starting 64-bit Ubuntu in BIOS mode on the ...]] 
+*** TODO Work in a branch off nixos-hardware and open a PR https://github.com/NixOS/nixos-hardware/tree/master/apple/macbook-pro
+*** DONE Research issue with 64bit
+    Issue is 32bit EFI with 64bit OS
+*** DONE Make 32bit min usb
+    CLOSED: [2021-02-11 Thu 19:27]
+    https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb
+    [[https://www.acronis.com/en-us/articles/usb-boot/#:~:text=Insert%20the%20USB%20boot%20media,to%20OS%20X's%20Startup%20Manager.][How to Boot from USB on Mac]] 
+*** DONE Backup old homedir before format
+    CLOSED: [2021-02-17 Wed 22:43]
+**** Formatted backup drive ZFS!
+**** Having deadlock copying homedir to USB drive
+     Not sure if src hw, dest hw, or ZFS bug.
+     Maybe [[https://github.com/openzfs/zfs/issues/11527][openzfs/zfs#11527 Deadlock or missed wakeup with heavy I/O, file deletion, an...]] 
+     Wow, deadlock bugs in FS, adventure!
+**** So falling back to backing up root partition using [[https://github.com/openzfs/zfs/issues/11527][ddrescue]]
+       (included in NixOS min installed, yay!)
+     seems to be working so far.
+*** DONE Format drive
+    CLOSED: [2021-02-17 Wed 22:43]
+    btrfs because zfs has issues..
+    [[https://gist.github.com/samdroid-apps/3723d30953af5e1d68d4ad5327e624c0][nixos install (boot + btrfs)]] 
+*** DONE Install 32bit
+    CLOSED: [2021-02-17 Wed 22:43]
+*** DONE Make 64bit usb
+    CLOSED: [2021-02-17 Wed 22:43]
+*** DONE Install 64bit
+    CLOSED: [2021-02-17 Wed 22:43]
+*** DONE MEH Have latest UEFI fw?
+    Check in kernel?
+    [[https://support.apple.com/kb/DL204?locale=en_US][Firmware Restoration CD 1.4]]
+    [[https://support.apple.com/en-us/HT201518][About EFI and SMC firmware updates for Intel-based Mac computers - Apple Support]] 
+    https://apple.stackexchange.com/questions/311947/how-to-update-latest-macbook-pro-efi-firmware-manually 
+    
+*** DONE set nomodeset in grub
+    CLOSED: [2021-02-17 Wed 23:14]
+*** DONE Bootstrap nixos-config
+    CLOSED: [2021-02-18 Thu 02:40]
+    ssh copy, add a new flake output, and run it
+*** OT: interesting, later OSX releases:
+    http://forum.netkas.org/index.php?topic=7505.0
+*** TODO Flakes on nixos grub i686 bug

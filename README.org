@@ -3,15 +3,17 @@ Configurations for my [[https://nixos.org/][NixOS]] systems.
 
 Having watched NixOS come together from my aging Arch install and mess of Debian servers for several years, I'm finally making the jump!
 
-* Resources
-** Nix / NixOS basics
+** Nix reading
+** Resources
+*** Nix / NixOS basics
 https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector
 *** Nix language
-https://nixos.org/guides/nix-pills/functions-and-imports.html
-** Terminology
+- https://nixos.org/guides/nix-pills/functions-and-imports.html
+*** Terminology
    [[https://stephank.nl/p/2020-06-01-a-nix-primer-by-a-newcomer.html][A Nix terminology primer by a newcomer]] 
-** Configs
+*** Configs
     with flakes:
+    https://github.com/utdemir/dotfiles
     https://github.com/cideM/dotfiles
     
     pre-flakes:
@@ -22,28 +24,40 @@ https://nixos.org/guides/nix-pills/functions-and-imports.html
     User envs:
     StumpWM/emacs: [[https://github.com/TLATER/dotfiles][TLATER/dotfiles]]
 
-** Flakes
+*** Flakes
    seem to be the future. Need to understand them better
     https://nixos.wiki/wiki/Flakes
     https://discourse.nixos.org/t/to-flake-or-not-to-flake/10047/4
    
-*** nixos configs 
+**** nixos configs 
     https://github.com/nrdxp/nixflk
     [[https://blog.ysndr.de/posts/internals/2021-01-01-flake-ification/][y|sndr - Building with Nix Flakes for, eh .. reasons!]] 
     
-*** Qs
-**** Different nixpkgs per package output (nixosSystem)?
+**** Qs
+***** Different nixpkgs per package output (nixosSystem)?
      https://discourse.nixos.org/t/hostname-based-flake-lock/10578
-**** And Homemanager
-**** Howto boot
-** Home Manager
+***** And Homemanager
+***** Howto boot
+*** Home Manager
    https://www.reddit.com/r/NixOS/comments/j3wvun/what_role_does_home_manager_fill_that_nixos_cant/
    https://www.google.com/search?q=nix%20home-manager%20and%20flakes
    https://www.reddit.com/r/NixOS/comments/iogoox/homemanager_with_flakes_on_non_nixos_system/
 
-** Conference Talks
+*** Conference Talks
    [[https://www.youtube.com/c/NixCon/videos][NixCon - YouTube]] 
 
-** Direnv
+*** Direnv
    https://github.com/nix-community/nix-direnv
-
+*** Philosophy
+**** [[https://grahamc.com/blog/erase-your-darlings][Erase your darlings: immutable infrastructure for mutable systems - Graham Ch...]]
+* Things I've learned
+** Modules
+*** Multiple assignments to the same option are merged with a type-specific strategy
+- [[https://www.reddit.com/r/NixOS/comments/cb42yk/howwhy_do_imports_result_in_string_concatenation/][How/why do imports result in string concatenation for attributes? : NixOS]]
+- [[https://nixos.org/manual/nixos/stable/index.html#sec-writing-modules][NixOS 20.09 manual: Writing modules]]
+** Flakes
+*** fetchUrl with sha256 is pure (and thus allowed in flakes)
+:PROPERTIES:
+:ID:       99a0b662-35b3-469b-b2a4-b564f5654bcc
+:END:
+- [[https://www.reddit.com/r/NixOS/comments/kvizxg/nix_flakes_with_nongit_inputs/][Nix Flakes with non-Git inputs : NixOS]]
