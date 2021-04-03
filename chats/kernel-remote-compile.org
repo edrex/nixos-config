@@ -1,0 +1,91 @@
+** Kernel compile
+edrex
+i need to pin kernel version, seems like i should be able to do this in a better way than https://discourse.nixos.org/t/override-kernel-version/3638/5 by using a special nixpkgs flake version just for the kernel part. anyone can confirm? I'm just on the cusp of being comfortable enough with the nix syntax and flake schema semantics to figure this out for myself, but not quite. When I figure out how I'll contrib to the Kernel page on the wiki.
+￼
+Override kernel version - NixOS Discourse
+boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_4_19.override { argsOverride = rec { src = pkgs.fetchurl { url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz"; sha256 = "0ibayrvrnw2lw7si78vdqnr20mm1d3z0g6a0ykndvgn5vdax5x9a"; }; version = "4.19.60"; modDirVersion = "4.19.60"; }; }); For anyone looking the above finally worked for me, thank you for the help: )
+￼￼
+My old apple hardware nixos-hardware PR is getting close!
+Another Q: I learned yesterday that fetchurl with a sha256 arg is pure. Is there an equivalent function for local files that I can tag a sha256 onto? I want to be able to instruct the user to put the non-redistributable firmware in their config dir, and throw an error if it's missing.
+balsoft (@balsoft:balsoft.ru)
+￼
+edrex
+Another Q: I learned yesterday that fetchurl with a sha256 arg is pure. Is there an equivalent function for local files that I can tag a sha256 onto? I want to be able to instruct the user to put the non-redistributable firmware in their config dir, and throw an error if it's missing.
+Use requireFile from nixpkgs
+B￼
+It will even print the instructions itself
+edrex
+awesome, I'll give that a shot with nixos flake mode
+￼
+l33
+Thursday
+￼
+oh_lawd
+I'd wish the partitions and formatting could also go with nix
+it can be scripted.
+L￼
+l33
+In reply to ￼oh_lawd
+L￼
+l33
+it can be scripted.
+https://gitlab.com/astralship/nixcfgs/-/blob/master/hosts/fu-cluster/_provisioning/provision-disks.sh , for inspiration.
+￼
+hosts/fu-cluster/_provisioning/provision-disks.sh · master · astralship / nixcfgs - GitLab
+Configuration for all machines aboard the Astralship.
+1+￼T￼T￼￼￼L￼
+edrex
+I heard non-local compilation is broken somehow with NixOS flakes preview, is that still true? I had kernel compile interrupted 4 hours on due to a cord coming unplugged on a 1yo x86_64, and I'm wishing I could run it on my snappy i7 laptop
+￼
+14yo rather
+J￼
+Today
+edrex
+   Also, it's a long shot, but I'm wondering if anyone has had success patching/rebuilding just a single kernel module on top of a kernel from the binary cache.
+￼
+maybe I should be asking in #nixos tho
+Finn Behrens
+I use build workers with my nix build from master. (both with non master daemons and master daemons on the other side)
+￼
+So I don't know of any really broken behaviors
+edrex
+￼Finn Behrens:
+￼
+Finn Behrens
+sometimes the daemon runs out of fds on the other end, restarting the build usually helps there
+￼
+edrex
+oops :) any pointers to how to set that up on a local network? my fast system in arch linux with nix
+￼
+is rather
+Finn Behrens
+does the arch has a global install nix daemon?
+￼
+edrex
+yeah
+￼
+Finn Behrens
+sudo --preserve-env=SSH_AUTH_SOCK nix build .#linux_latest --builders "ssh://arch-computer x86_64-linux / 8 1 kvm,big-parallel,benchmark,nixos-test" --builders-use-substitutes -j 0 --argstr system x86_64-linux  --log-format bar-with-logs
+￼
+I'm doing something like this (for this you have to have a config under /root/.ssh/config which tells how to connect to arch-computer
+I'm using this, as I have to use my gpg-agent as my key is on a smardcard, you could also replace the / between x86_64-linux and 8 with a path to the key and don't use sudo (AFAIK)
+edrex
+So, the build command will talk to the remote nix daemon magically do a remote build?
+￼
+Finn Behrens
+if you are trusted, es
+￼
+*yes
+edrex
+you mean the user you connect as is trusted by the nix daemon?
+￼
+that's so cool!
+I will try it in the morning. gf is getting tired of me saying I'm about to come to bed i think.
+Finn Behrens
+I'm not sure if you have to be trusted on the remote end. But I think you have to be trusted on your own computer (root is usually trusted if you use sudo for smartcard)
+￼
+Ok, it's morning for me xD
+If you have problems, ping me. here or directly in matrix
+edrex
+00:26
+thanks!

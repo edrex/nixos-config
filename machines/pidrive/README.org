@@ -11,6 +11,9 @@
 ** DONE sudo ln -s $PWD/configuration.nix /etc/nixos/ 
 ** DONE Run nixos-rebuild
    CLOSED: [2021-02-05 Fri 14:58]
+* TODO ddclient config
+[[https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/ddclient.nix][nixpkgs/ddclient.nix at master · NixOS/nixpkgs]]
+https://search.nixos.org/options?query=ddclient
 * Issues
 ** TODO Wayland on RPi?
    Maybe not?

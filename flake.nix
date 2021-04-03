@@ -14,7 +14,7 @@
          system = "x86_64-linux";
          modules = [
            ./machines/silversurfer/configuration.nix
-           inputs.nixos-hardware.nixosModules.apple-macbook-pro-2-1
+           inputs.nixos-hardware.nixosModules.apple-macbook-pro-2-2
          ];
        };
      };

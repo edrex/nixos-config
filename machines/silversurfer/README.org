@@ -9,7 +9,10 @@
     01:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] RV530/M56-P [Mobility Radeon X1600]
         Subsystem: Apple Inc. MacBook Pro
         Kernel modules: radeon
-*** TODO fix modeset issue
+*** DONE Bless EFI partition with macos installer disk
+    [[https://mattgadient.com/reducing-the-30-second-delay-when-starting-64-bit-ubuntu-in-bios-mode-on-the-old-32-bit-efi-macs/][Reducing the 30 second delay when starting 64-bit Ubuntu in BIOS mode on the ...]] 
+*** TODO Work in a branch off nixos-hardware and open a PR https://github.com/NixOS/nixos-hardware/tree/master/apple/macbook-pro
+**** TODO fix modeset issue
     Best summary of steps needed:
      - [[https://bbs.archlinux.org/viewtopic.php?pid=1810437#p1810437][Load custom Radeon firmware for Macbook Pro / Kernel & Hardware / Arch Linux ...]] 
      - http://www.andreasbaumann.cc/blog/archlinux-macbook-a1211/
@@ -17,10 +20,18 @@
      Also:
      [[https://forum.artixlinux.org/index.php/topic,586.0.html][{SOLVED} 32bit Mac EFI doesn't expose vbios in UEFI mode]] 
      [[https://bugs.freedesktop.org/show_bug.cgi?id=26891#c3][26891 – Radeon KMS fails with inaccessible AtomBIOS on systems with (U)EFI boot]]
-**** TODO Build custom kernel with Andrew's patch
-*** TODO Bless EFI partition with macos installer disk
-    [[https://mattgadient.com/reducing-the-30-second-delay-when-starting-64-bit-ubuntu-in-bios-mode-on-the-old-32-bit-efi-macs/][Reducing the 30 second delay when starting 64-bit Ubuntu in BIOS mode on the ...]] 
-*** TODO Work in a branch off nixos-hardware and open a PR https://github.com/NixOS/nixos-hardware/tree/master/apple/macbook-pro
+***** DONE Update patch and have nix apply it
+[[https://www.emacswiki.org/emacs/ApplyingPatches][EmacsWiki: Applying Patches]]
+***** TODO Build patched kernel (or just radeon module)
+[[https://nixos.wiki/wiki/Linux_kernel#Pinning_a_kernel_version][Linux kernel - NixOS Wiki]]
+[[https://github.com/NixOS/nixpkgs/blob/nixos-20.09/nixos/modules/system/boot/kernel.nix][nixpkgs/kernel.nix at nixos-20.09 · NixOS/nixpkgs]]
+****** TODO Set up remote builder on chip
+****** TODO Possible to build just the needed kernel module?
+[[https://stackoverflow.com/questions/8744087/how-to-recompile-just-a-single-kernel-module][linux - How to recompile just a single kernel module? - Stack Overflow]]
+***** TODO Find out how to ask for and place vbios firmware
+[[https://discourse.nixos.org/t/trying-to-include-custom-firmware-but-it-doesnt-appear-under-run-current-system/3044/2][Trying to include custom firmware, but it doesn't appear under /run/current-system - NixOS Discourse]]
+[[https://github.com/NixOS/nixpkgs-channels/blob/84d74ae9c9cbed73274b8e4e00be14688ffc93fe/pkgs/games/dxx-rebirth/assets.nix#L10][nixpkgs-channels/assets.nix at 84d74ae9c9cbed73274b8e4e00be14688ffc93fe · NixOS/nixpkgs-channels]]
+
 *** DONE Research issue with 64bit
     Issue is 32bit EFI with 64bit OS
 *** DONE Make 32bit min usb
@@ -60,4 +71,4 @@
     ssh copy, add a new flake output, and run it
 *** OT: interesting, later OSX releases:
     http://forum.netkas.org/index.php?topic=7505.0
-*** TODO Flakes on nixos grub i686 bug
+*** DONE Flakes on nixos grub i686 bug
