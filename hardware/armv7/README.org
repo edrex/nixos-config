@@ -148,3 +148,5 @@ I did minimize the image a bit, but it still took forever to build - building ju
    https://landley.net/aboriginal/presentation.html
 
    https://nixos.wiki/wiki/User:Samueldr/NixOS_on_ARM
+   
+** Some ideas for remote compilation here: [[https://github.com/matthewbauer/nixiosk/blob/master/retroarch-lakkaish.patch][matthewbauer/nixiosk: Declarative Kiosk systems built with NixOS]] [[https://matthewbauer.us/blog/nixiosk.html][Announcing Nixiosk]]

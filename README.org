@@ -25,9 +25,8 @@ https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector
     StumpWM/emacs: [[https://github.com/TLATER/dotfiles][TLATER/dotfiles]]
 
 *** Flakes
-   seem to be the future. Need to understand them better
-    https://nixos.wiki/wiki/Flakes
-    https://discourse.nixos.org/t/to-flake-or-not-to-flake/10047/4
+   Official reference: [[https://nixos.org/manual/nix/unstable/command-ref/new-cli/nix3-flake.html][nix flake]]
+   Supplementary/meh: https://nixos.wiki/wiki/Flakes
    
 **** nixos configs 
     https://github.com/nrdxp/nixflk
@@ -55,9 +54,24 @@ https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector
 *** Multiple assignments to the same option are merged with a type-specific strategy
 - [[https://www.reddit.com/r/NixOS/comments/cb42yk/howwhy_do_imports_result_in_string_concatenation/][How/why do imports result in string concatenation for attributes? : NixOS]]
 - [[https://nixos.org/manual/nixos/stable/index.html#sec-writing-modules][NixOS 20.09 manual: Writing modules]]
+** Overlays
+- Function final: prev: { setOfPackages }
+https://nixos.org/manual/nixpkgs/stable/#sec-overlays-definition 
 ** Flakes
 *** fetchUrl with sha256 is pure (and thus allowed in flakes)
-:PROPERTIES:
-:ID:       99a0b662-35b3-469b-b2a4-b564f5654bcc
-:END:
 - [[https://www.reddit.com/r/NixOS/comments/kvizxg/nix_flakes_with_nongit_inputs/][Nix Flakes with non-Git inputs : NixOS]]
+** Managing secrets
+*** Read this: [[https://christine.website/blog/nixos-encrypted-secrets-2021-01-20][Encrypted Secrets with NixOS - Christine Dodrill]]
+*** Eval:
+**** NO [[https://github.com/Mic92/sops-nix][Mic92/sops-nix: Atomic secret provisioning for NixOS based on sops]]
+- [X] flakes support 
+**** YES https://github.com/ryantm/agenix
+ - simpler (interface is just nix expressions, no filesystem)
+**** [?] [[https://github.com/NixOS/nixpkgs/pull/93659][nixos/security.gnupg: provisioning GnuPG-protected secrets through the Nix store by ju1m · Pull Request #93659 · NixOS/nixpkgs]]
+
+* Research
+** Emacs
+[[https://github.com/nix-community/emacs-overlay/blob/6f1b47652747b10b6e7e42377baf2bafb95cc854/default.nix#L94][emacsPgtkGcc emacs-overlay/default.nix at 6f1b47652747b10b6e7e42377baf2bafb95cc854 · nix-community/emacs-overlay]]
+[[https://dangirsh.org/projects/neurosys.html][Dan Girshovich - neurosys]]
+https://tecosaur.github.io/emacs-config/
+[[https://github.com/vlaci/nix-doom-emacs][vlaci/nix-doom-emacs: doom-emacs packaged for Nix]]

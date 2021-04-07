@@ -17,3 +17,5 @@ Gitea is the clear choice: efficient, features like github 5 years agot before b
 * Current projects
 ** dark mode
 [[https://codeberg.org/edrex/dark-now][edrex/dark-now: Exploring techniques for dynamically switching color schemes across different shells, toolkits, and applications, aiming to create a simple frontend for controlling multiple backends, allowing day/night, webcam spectrogram, or manual mode switching. - dark-now - Codeberg.org]]
+
+

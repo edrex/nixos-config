@@ -56,4 +56,5 @@
     "EDITOR" = "vim";
     "VISUAL" = "vim";
   };
+
 }
