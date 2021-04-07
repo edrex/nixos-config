@@ -4,8 +4,8 @@
 
     nixos-hardware.url = "path:./nixos-hardware"; # TODO: this is temp while I'm working on a branch
 
-    inputs.agenix.url = "github:ryantm/agenix";
-    inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
   };
 
@@ -24,6 +24,5 @@
         #TODO: inputs.nixos-hardware.nixosModules.apple-macbook-pro-2-2
       };
     };
-  };
 }
 #TODO: maybe map machine configs to outputs like https://www.reddit.com/r/NixOS/comments/j4k2zz/does_anyone_use_flakes_to_manage_their_entire/g7jrqcn/?context=3
