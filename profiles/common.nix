@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nix, ... }:
+{ config, pkgs, lib, nix, inputs, ... }:
 
 {
   nix.package = pkgs.nixUnstable;
@@ -8,8 +8,14 @@
 
   imports =
     [
+      inputs.agenix.nixosModules.age
       ../services/ssh.nix
     ];
+
+      nixpkgs.overlays = [
+        inputs.agenix.overlay
+      ];
+
 
   # mount tmpfs on /tmp
   # boot.tmpOnTmpfs = lib.mkDefault true;
@@ -48,6 +54,7 @@
     jq
     # yq
     # gitAndTools.gitFull
+    agenix
   ];
 
   programs.bash.enableCompletion = true;

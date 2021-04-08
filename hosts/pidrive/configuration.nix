@@ -1,5 +1,5 @@
 # https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   networking.hostName = "pidrive";
   imports =
@@ -48,5 +48,11 @@
 
   # !!! Adding a swap file is optional, but strongly recommended!
   swapDevices = [ { device = "/swapfile"; size = 1024; } ];
+
+  age.secrets.ddclient.file = ../../secrets/pidrive/ddclient.conf.age;
+  services.ddclient = {
+    enable = true;
+    configFile = config.age.secrets.ddclient.path;
+  };
 
 }
