@@ -11,7 +11,7 @@
 ** DONE sudo ln -s $PWD/configuration.nix /etc/nixos/ 
 ** DONE Run nixos-rebuild
    CLOSED: [2021-02-05 Fri 14:58]
-* TODO ddclient config
+* DONE ddclient config
 [[https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/ddclient.nix][nixpkgs/ddclient.nix at master · NixOS/nixpkgs]]
 https://search.nixos.org/options?query=ddclient
 * Issues
@@ -34,6 +34,7 @@ https://search.nixos.org/options?query=ddclient
     [render/egl.c:421] Failed to get EGL surface buffer age
     (repeated ~1/sec)
      
+*** Some
 * References
 ** https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3
 ** TODO Evaluate [add raspberry-pi 0 and 3 by matthewbauer · Pull Request #93 · NixOS/nixos-hardware](https://github.com/NixOS/nixos-hardware/pull/93)

@@ -1,20 +1,25 @@
 { config, pkgs, lib, nix, inputs, ... }:
 
 {
+
+  # cache stuff
+  nix.gc.automatic = true;
+  nix.gc.dates = "03:15";
+
+  # flake support
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
 
-  imports =
-    [
-      inputs.agenix.nixosModules.age
-      ../services/ssh.nix
-    ];
+  imports = [
+    inputs.agenix.nixosModules.age
+    ../services/ssh.nix
+  ];
 
-      nixpkgs.overlays = [
-        inputs.agenix.overlay
-      ];
+  nixpkgs.overlays = [
+    inputs.agenix.overlay
+  ];
 
 
   # mount tmpfs on /tmp

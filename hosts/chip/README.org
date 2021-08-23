@@ -3,12 +3,12 @@
   
 ** References
 * Features
+** TODO Free space on Arch partition
 ** TODO Dual-boot with Arch
 *** sharing LUKS-on-LVM
    Crib from davidak: https://translate.google.com/translate?sl=auto&tl=en&u=https://davidak.de/nixos-installation/
    https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#LUKS_on_LVM
-*** TODO How to share homedir? 
+*** TODO share homedir
 **** Symlink or mount with path?
-**** Need to move to seperate volume?
-*** TODO Boot menu entry (decide whether to let arch manage systemd-boot or nix
-*** TODO 
+**** move to seperate volume?
+*** TODO Boot menu entry + let nixos manage systemd-boot EFI prog

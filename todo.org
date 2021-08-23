@@ -1,4 +1,0 @@
-* Inbox
-** TODO Org capture from browser, graphical shell
-Org-protocol is one route:
-- [[https://orgmode.org/worg/org-contrib/org-protocol.html#orgcb5ca9d][org-protocol.el – Intercept calls from emacsclient to trigger custom actions]]
