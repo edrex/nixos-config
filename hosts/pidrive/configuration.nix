@@ -6,6 +6,7 @@
     [
       ../../profiles/hardware.nix
       ../../profiles/desktop.nix
+      ../../mixins/wifi.nix
       # ../../profiles/notebook.nix
       # ../../profiles/work.nix
       # ../../profiles/communication.nix
@@ -22,7 +23,22 @@
   # !!! Needed for the virtual console to work on the RPi 3, as the default of 16M doesn't seem to be enough.
   # If X.org behaves weirdly (I only saw the cursor) then try increasing this to 256M.
   # On a Raspberry Pi 4 with 4 GB, you should either disable this parameter or increase to at least 64M if you want the USB ports to work.
-  boot.kernelParams = ["cma=32M"];
+  boot.kernelParams = ["cma=256M"];
+
+  nixpkgs.overlays = [
+    (self: super: {
+      firmwareLinuxNonfree = super.firmwareLinuxNonfree.overrideAttrs (old: {
+        version = "2020-12-18";
+        src = pkgs.fetchgit {
+          url =
+            "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git";
+          rev = "b79d2396bc630bfd9b4058459d3e82d7c3428599";
+          sha256 = "1rb5b3fzxk5bi6kfqp76q1qszivi0v1kdz1cwj2llp5sd9ns03b5";
+        };
+        outputHash = "1p7vn2hfwca6w69jhw5zq70w44ji8mdnibm1z959aalax6ndy146";
+      });
+    })
+  ];
 
   hardware.enableRedistributableFirmware = true;
   #networking.wireless.enable = true;
@@ -53,6 +69,52 @@
   services.ddclient = {
     enable = true;
     configFile = config.age.secrets.ddclient.path;
+  };
+
+  networking.firewall = {
+    enable = true;
+    allowPing = true;
+    trustedInterfaces = [ "wlan0" ];
+    allowedTCPPorts = [
+      22    # ssh
+      80    # http
+      443   # https
+      #2222  # git
+    ];
+    allowedUDPPorts = [ ];
+  };
+  networking.nat = {
+    enable = true;
+    internalIPs = [ "192.168.5.0/24" ];
+    externalInterface = "eth0";
+  };
+  networking.interfaces = {
+    wlan0 = {
+      useDHCP = false;
+      ipv4.addresses = [{ 
+        address = "192.168.5.1";
+        prefixLength = 24;
+      }];
+    };
+  };
+  services.hostapd = {
+    enable = true;
+    interface = "wlan0";
+    ssid = "mesopotamia";
+    wpaPassphrase = "FOOBAR470";
+    hwMode = "g";
+    channel = 10;
+  };
+
+  services.dnsmasq = {
+    enable = true;
+    servers = [ "8.8.8.8" "8.8.4.4" ];
+    extraConfig = ''
+      domain=lan
+      interface=wlan0
+      bind-interfaces
+      dhcp-range=192.168.5.10,192.168.5.254,24h
+    '';
   };
 
 }
