@@ -2,7 +2,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixos-hardware.url = "path:./nixos-hardware"; # TODO: this is temp while I'm working on a branch
+    nixos-hardware.url = github:NixOS/nixos-hardware/master;
+    #nixos-hardware.url = "path:./nixos-hardware"; # TODO: this is temp while I'm working on a branch
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
