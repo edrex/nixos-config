@@ -22,6 +22,12 @@
           system = system;
           modules = [
             (./. + "/hosts/${hostname}/configuration.nix")
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.edrex = import ././home.nix;
+            }
           ];
           specialArgs = { inherit inputs; };
         };
@@ -31,20 +37,6 @@
         silversurfer = mkSystem inputs.nixpkgs "x86_64-linux" "silversurfer";
         #TODO: inputs.nixos-hardware.nixosModules.apple-macbook-pro-2-2
 
-      };
-      homeConfigurations = {
-        eric = inputs.home-manager.lib.homeManagerConfiguration {
-          configuration = { config, pkgs, home, ... }: {
-            home.stateVersion = "21.05";
-            # home.packages = [ pkgs.hello ];
-            # # v This was apparently required
-            # programs.home-manager.enable = true;
-          };
-          system = "x86_64-linux";
-          homeDirectory = "/home/eric";
-          username = "eric";
-          extraSpecialArgs = { inherit inputs; };
-        };
       };
     };
 }
