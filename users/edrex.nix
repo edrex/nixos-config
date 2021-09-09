@@ -1,9 +1,5 @@
 { config, pkgs, lib, ... }:
 {
-#  imports =
-#    [
-#      <home-manager/nixos>
-#    ];
 
   users.extraUsers.edrex = {
     isNormalUser = true;
@@ -24,10 +20,10 @@
   # home-manager.useUserPackages = true;
   # home-manager.useGlobalPkgs = true;
 
-  # home-manager.users.davidak = { pkgs, ... }: {
+  home-manager.users.edrex = { pkgs, ... }: {
   #   #home.packages = with pkgs; [ httpie ];
 
-  #   programs = {
+    programs = {
   #     bash = {
   #       enable = true;
   #       historyControl = [ "ignoredups" "ignorespace" ];
@@ -38,18 +34,20 @@
   #       serverAliveInterval = 60;
   #     };
 
-  #     git = {
-  #       enable = true;
+      git = {
+        enable = true;
+        userName = "Eric Drechsel";
+        userEmail = "eric@pdxhub.org";
   #       extraConfig = {
   #         push = { default = "current"; };
   #         pull = { rebase = true; };
   #       };
-  #     };
-  #   };
+      };
+    };
 
   #   # manuals not needed
   #   manual.html.enable = false;
   #   manual.json.enable = false;
   #   manual.manpages.enable = false;
-  # };
+  };
 }

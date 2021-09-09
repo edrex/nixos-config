@@ -22,11 +22,11 @@
           system = system;
           modules = [
             (./. + "/hosts/${hostname}/configuration.nix")
+            (./. + "/users/edrex.nix")
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.edrex = import ././home.nix;
             }
           ];
           specialArgs = { inherit inputs; };
@@ -34,6 +34,7 @@
     in {
       nixosConfigurations = {
         pidrive = mkSystem inputs.nixpkgs "aarch64-linux" "pidrive";
+        whitecanyon = mkSystem inputs.nixpkgs "aarch64-linux" "whitecanyon";
         silversurfer = mkSystem inputs.nixpkgs "x86_64-linux" "silversurfer";
         #TODO: inputs.nixos-hardware.nixosModules.apple-macbook-pro-2-2
 
