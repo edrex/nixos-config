@@ -4,6 +4,7 @@
 
 { config, pkgs, ... }:
 
+
 {
   imports =
     [ ../../profiles/common.nix
@@ -17,8 +18,9 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   networking.hostName = "whitecanyon"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
@@ -26,6 +28,11 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
+
+  # conflicts with hostapd
+  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  #networking.interfaces.wlan0.useDHCP = true;
+  
 
 
   # Select internationalisation properties.

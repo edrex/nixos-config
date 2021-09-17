@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, inputs, ... }: {
   # TODO: mixins/router
   # https://github.com/jgillich/nixos/blob/master/roles/router.nix 
   # https://nixos.wiki/wiki/Networking
@@ -6,7 +6,30 @@
 
 
   # hardware specific, see https://github.com/mirrexagon/espressobin-nix/issues/2#issuecomment-833560329
-  networking.useNetworkd = true;
+  networking = {
+    useNetworkd = true;
+    wireless.enable = false;
+  };
+  age.secrets.hostapdConf.file = ../../secrets/whitecanyon/hostapd.conf.age;
+  services.hostapd = {
+    enable = true;
+    interface = "wlan0"; # needed for sysdeps
+    #ssid = "whitecanyon";
+    #hwMode = "g";
+    #channel = 10;
+    #wpaPassphrase="";
+  };
+  systemd.services.hostapd = {
+    serviceConfig = {
+      ExecStart = lib.mkForce "${pkgs.hostapd}/bin/hostapd ${config.age.secrets.hostapdConf.path}";
+      ExecStartPost = [
+        "${pkgs.systemd}/lib/systemd/systemd-networkd-wait-online -i wlan0 -o carrier"
+        "networkctl reconfigure wlan0" # bring up the bridge
+      ];
+    };
+  };
+ 
+
   systemd.network = {
     enable = true;
     netdevs.br0.netdevConfig = {
@@ -23,18 +46,26 @@
         networkConfig = { 
           DHCP = "yes";
           BindCarrier = [ "eth0" ];
-        };
-      };
-      lan = {
-        matchConfig.Name = "lan*";
-        networkConfig = { 
-          BindCarrier = [ "eth0" ];
-          Bridge="br0";
+          DNSSEC = "yes";
+          DNSOverTLS = "yes";
+          DNS = [ "1.1.1.1" "1.0.0.1" ];
         };
       };
       wlan0 = {
         matchConfig.Name = "wlan0";
         networkConfig = { 
+          Bridge="br0";
+        };
+        extraConfig = ''
+          [Link]
+          ActivationPolicy=manual
+        '';
+      };
+ 
+      lan = {
+        matchConfig.Name = "lan*";
+        networkConfig = { 
+          BindCarrier = [ "eth0" ];
           Bridge="br0";
         };
       };
@@ -51,12 +82,11 @@
           PoolOffset=100
           PoolSize=20
           EmitDNS=yes
-          DNS=9.9.9.9
-	'';
+          DNS=8.8.8.8
+        '';
       };        
     };
   };
-
   services.fail2ban.enable = true;
   networking.firewall = {
     enable = true;

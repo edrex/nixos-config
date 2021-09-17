@@ -1,6 +1,7 @@
 let
   systems = {
     pidrive = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILM3yRVHRraaQv8/zQACUX9+XZgOZSEI+7CozjFOb0Av";
+    whitecanyon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0ioOOvG8RSBl0losaQnTn1BL8nnTQeQ/SyEDe1ntOR";
     chip = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJT816z8Zjx5kbIfu2nM5cAxXN7hHOMC3b0dje78lYI6";
   };
 
@@ -9,4 +10,5 @@ let
   };
 in {
   "pidrive/ddclient.conf.age".publicKeys = [ systems.pidrive ] ++ builtins.attrValues users;
+  "whitecanyon/hostapd.conf.age".publicKeys = [ systems.whitecanyon ] ++ builtins.attrValues users;
 }

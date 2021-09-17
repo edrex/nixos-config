@@ -13,7 +13,6 @@
   '';
 
   imports = [
-    inputs.agenix.nixosModules.age
     ../services/ssh.nix
   ];
 

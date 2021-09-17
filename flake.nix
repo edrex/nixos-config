@@ -23,6 +23,7 @@
           modules = [
             (./. + "/hosts/${hostname}/configuration.nix")
             (./. + "/users/edrex.nix")
+            inputs.agenix.nixosModules.age
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

@@ -7,10 +7,6 @@
       ../../profiles/hardware.nix
       ../../profiles/desktop.nix
       ../../mixins/wifi.nix
-      # ../../profiles/notebook.nix
-      # ../../profiles/work.nix
-      # ../../profiles/communication.nix
-      # ../../profiles/development.nix
     ];
 
   # NixOS wants to enable GRUB by default
@@ -71,53 +67,4 @@
     configFile = config.age.secrets.ddclient.path;
   };
 
-  # TODO: mixins/router
-  # https://github.com/jgillich/nixos/blob/master/roles/router.nix 
-  # https://nixos.wiki/wiki/Networking
-  networking.firewall = {
-    enable = true;
-    allowPing = true;
-    trustedInterfaces = [ "wlan0" ];
-    allowedTCPPorts = [
-      22    # ssh
-      80    # http
-      443   # https
-      #2222  # git
-    ];
-    allowedUDPPorts = [ ];
-  };
-  networking.nat = {
-    enable = true;
-    internalIPs = [ "192.168.5.0/24" ];
-    externalInterface = "eth0";
-  };
-  networking.interfaces = {
-    wlan0 = {
-      useDHCP = false;
-      ipv4.addresses = [{ 
-        address = "192.168.5.1";
-        prefixLength = 24;
-      }];
-    };
-  };
-  services.hostapd = {
-    enable = true;
-    interface = "wlan0";
-    ssid = "mesopotamia";
-    wpaPassphrase = "FOOBAR470";
-    hwMode = "g";
-    channel = 10;
-  };
-
-  services.dnsmasq = {
-    enable = true;
-    servers = [ "8.8.8.8" "8.8.4.4" ];
-    extraConfig = ''
-      domain=lan
-      interface=wlan0
-      bind-interfaces
-      dhcp-range=192.168.5.10,192.168.5.254,24h
-    '';
-  };
-  services.fail2ban.enable = true;
 }
