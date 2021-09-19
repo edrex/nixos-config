@@ -1,9 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "path:/home/eric/src/github.com/NixOS/nixpkgs";
 
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
-    #nixos-hardware.url = "path:./nixos-hardware"; # TODO: this is temp while I'm working on a branch
+    # nixos-hardware.url = "path:/home/eric/src/github.com/NixOS/nixos-hardware";
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
@@ -21,14 +22,28 @@
         pkgs.lib.nixosSystem {
           system = system;
           modules = [
+            ({ pkgs, ... }: {
+              # cache stuff
+              nix.gc.automatic = true;
+              nix.gc.dates = "03:15";
+
+              # flake support
+              nix.extraOptions = "experimental-features = nix-command flakes ca-references";
+              nix.package = pkgs.nixUnstable;
+              nix.registry.nixpkgs.flake = inputs.nixpkgs;
+
+              nixpkgs.overlays = [
+                inputs.agenix.overlay
+              ];
+
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            })
+
             (./. + "/hosts/${hostname}/configuration.nix")
             (./. + "/users/edrex.nix")
             inputs.agenix.nixosModules.age
             inputs.home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-            }
           ];
           specialArgs = { inherit inputs; };
         };

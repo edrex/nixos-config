@@ -1,8 +1,13 @@
 { config, pkgs, lib, inputs, ... }: {
-  # TODO: mixins/router
+  # TODO: networking/wireless/router.nix
   # https://github.com/jgillich/nixos/blob/master/roles/router.nix 
   # https://nixos.wiki/wiki/Networking
 
+
+  # TODO: networking/wireless/base.nix
+   environment.systemPackages = with pkgs; [
+     iw
+   ];
 
 
   # hardware specific, see https://github.com/mirrexagon/espressobin-nix/issues/2#issuecomment-833560329
@@ -40,6 +45,10 @@
       eth0 = {
         matchConfig.Name = "eth0";
         networkConfig.LinkLocalAddressing = "ipv6";
+        extraConfig = ''
+          [Link]
+          ActivationPolicy=manual
+        '';
       };
       wan = {
         matchConfig.Name = "wan";
@@ -48,7 +57,7 @@
           BindCarrier = [ "eth0" ];
           DNSSEC = "yes";
           DNSOverTLS = "yes";
-          DNS = [ "1.1.1.1" "1.0.0.1" ];
+          DNS = [ "8.8.8.8" ];
         };
       };
       wlan0 = {
