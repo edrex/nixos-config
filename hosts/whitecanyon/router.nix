@@ -1,4 +1,11 @@
-{ config, pkgs, lib, inputs, ... }: {
+{ config, pkgs, lib, inputs, ... }:
+  let 
+    interfaces = {
+      ap = ["wlan0"];
+    };
+  in {
+
+
   # TODO: networking/wireless/router.nix
   # https://github.com/jgillich/nixos/blob/master/roles/router.nix 
   # https://nixos.wiki/wiki/Networking
@@ -9,11 +16,15 @@
      iw
    ];
 
+  # conflicts with hostapd
+  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  #networking.interfaces.wlan0.useDHCP = true;
 
   # hardware specific, see https://github.com/mirrexagon/espressobin-nix/issues/2#issuecomment-833560329
   networking = {
     useNetworkd = true;
     wireless.enable = false;
+    useDHCP = false;
   };
   age.secrets.hostapdConf.file = ../../secrets/whitecanyon/hostapd.conf.age;
   services.hostapd = {
@@ -84,6 +95,7 @@
         networkConfig = {
           Address = "192.168.6.1/24";
           DHCPServer = true;
+          MulticastDNS = true;
           IPMasquerade=true;
         };
         extraConfig = ''
@@ -97,6 +109,9 @@
     };
   };
   services.fail2ban.enable = true;
+  # TODO: let's put as much as possible in a networking module
+  # do stuff per-trusted interface
+  #  - MulticastDNS = true
   networking.firewall = {
     enable = true;
     allowPing = true;

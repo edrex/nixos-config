@@ -17,9 +17,6 @@
   #   };
   # };
 
-  # home-manager.useUserPackages = true;
-  # home-manager.useGlobalPkgs = true;
-
   home-manager.users.edrex = { pkgs, ... }: {
   #   #home.packages = with pkgs; [ httpie ];
 
@@ -44,10 +41,5 @@
   #       };
       };
     };
-
-  #   # manuals not needed
-  #   manual.html.enable = false;
-  #   manual.json.enable = false;
-  #   manual.manpages.enable = false;
   };
 }

@@ -7,7 +7,7 @@
 
 {
   imports =
-    [ ../../profiles/common.nix
+    [ ../../modules/base.nix
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./router.nix
@@ -24,15 +24,6 @@
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-
-  # conflicts with hostapd
-  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  #networking.interfaces.wlan0.useDHCP = true;
-  
 
 
   # Select internationalisation properties.

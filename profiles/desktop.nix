@@ -1,17 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports =
-    [
-      # TODO: simplify
-      #../services/avahi.nix
-      # ../services/avahi-server.nix
-      # ../services/avahi-client.nix
-      # ../services/fonts
-      ./common.nix
-      ../users/edrex.nix
-    ];
-
   # boot splash instead of log messages
   # boot.plymouth.enable = true;
 
