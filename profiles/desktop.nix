@@ -3,8 +3,6 @@
 {
   # boot splash instead of log messages
   # boot.plymouth.enable = true;
-
-  # programs.sway.enable = true;
   # programs.ssh.startAgent = true;
   programs.sway = {
     enable = true;

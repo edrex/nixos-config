@@ -33,6 +33,11 @@
 
   swapDevices = [ ];
 
+  # disable broken USB port in hub. Probably not needed with a different hub.
+  services.udev.extraRules = ''
+    KERNELS=="usb4" SUBSYSTEMS=="usb" ATTRS{idVendor}=="1d6b" ATTRS{idProduct}=="0003" ATTR{authorized}="0"
+  '';
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # high-resolution display

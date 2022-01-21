@@ -2,6 +2,17 @@
 
 Configurations for my [NixOS](https://nixos.org/) systems.
 
+
+## Fresh install from Live USB:
+
+- `nixos-generate-config --root /mnt`
+- Check out this repo to `/mnt/etc/nixos`
+- `nixos-install --flake /mnt/etc/nixos#chip`
+
+
+------
+
+
 Having watched NixOS come together from my aging Arch install and mess
 of Debian servers for several years, I\'m finally making the jump!
 
@@ -9,13 +20,13 @@ of Debian servers for several years, I\'m finally making the jump!
 
 ### Nix / NixOS basics
 
--   <https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector>
--   [A Nix terminology primer by a
+- <https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector>
+- [A Nix terminology primer by a
     newcomer](https://stephank.nl/p/2020-06-01-a-nix-primer-by-a-newcomer.html)
 
 ### Nix language
 
--   <https://nixos.org/guides/nix-pills/functions-and-imports.html>
+- <https://nixos.org/guides/nix-pills/functions-and-imports.html>
 
 ### Terminology
 
