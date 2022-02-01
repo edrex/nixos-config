@@ -7,7 +7,7 @@
 
 {
   imports =
-    [ ../../modules/base.nix
+    [ ../../mixins/base.nix
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./router.nix

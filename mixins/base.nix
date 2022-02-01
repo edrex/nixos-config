@@ -44,9 +44,14 @@
     # yq
     # gitAndTools.gitFull
     agenix
+    cachix
   ];
 
   programs.bash.enableCompletion = true;
+
+
+#TODO: vim editor stuff in module
+# vimPlugins.vim-nix
 
   environment.variables = {
     "EDITOR" = "vim";

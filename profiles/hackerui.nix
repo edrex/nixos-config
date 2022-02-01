@@ -21,5 +21,6 @@
     qutebrowser
     foot
     firefox
+    vivaldi
   ];
 }

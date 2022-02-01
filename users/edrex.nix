@@ -11,7 +11,7 @@
 
   # services.syncthing = {
   #   enable = lib.mkDefault true;
-  #   user = "davidak";
+  #   user = "edrex";
   #   #dataDir = "/home/davidak/.syncthing";
   #   openDefaultPorts = true;
   #   declarative = {
@@ -21,22 +21,44 @@
   # };
 
   home-manager.users.edrex = { pkgs, ... }: {
-  #   #home.packages = with pkgs; [ httpie ];
+    home.packages = with pkgs; [
+      # TODO: put this in notetaking.nix
+      obsidian
+    ];
+
+    services = {
+      # gpg-agent = {
+      #   enable = true;
+      #   enableSshSupport = true;
+      # };
+      syncthing = {
+        enable = true;
+        tray.enable = true;
+      };
+    };
 
     programs = {
-  #     ssh = {
-  #       enable = true;
-  #       serverAliveInterval = 60;
-  #     };
+      fish.enable = true;
+      keychain = {
+        enable = true;
+        agents = [ "ssh" ];
+        # keys = [ "id_ed25519" ];
+        # Work around https://github.com/nix-community/home-manager/issues/2256
+        enableBashIntegration = false;
+      };
+      # ssh = {
+      #   startAgent = true;
+      # };
 
       git = {
         enable = true;
         userName = "Eric Drechsel";
         userEmail = "eric@pdxhub.org";
-  #       extraConfig = {
-  #         push = { default = "current"; };
-  #         pull = { rebase = true; };
-  #       };
+        extraConfig = {
+          init.defaultBranch = "main";
+          push = { default = "current"; };
+          pull = { rebase = true; };
+        };
       };
     };
   };

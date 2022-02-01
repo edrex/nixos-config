@@ -5,11 +5,9 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/networking/base.nix
-      ../../modules/networking/wireless-client.nix
-
+      ../mixins/networking.nix
+      ../mixins/wireless-client.nix
       ../../profiles/hardware.nix
-      ../../profiles/desktop.nix
     ];
 
   # NixOS wants to enable GRUB by default

@@ -25,12 +25,12 @@
             ({ pkgs, ... }: {
               # cache stuff
               nix = {
-                package = pkgs.nixFlakes;
+                package = pkgs.nixUnstable;
                 useSandbox = true;
                 autoOptimiseStore = true;
                 # readOnlyStore = false;
                 extraOptions = ''
-                  experimental-features = nix-command flakes ca-references
+                  experimental-features = nix-command flakes
                   # keep-outputs = true
                   # keep-derivations = true
                 '';
@@ -45,6 +45,11 @@
               nixpkgs.overlays = [
                 inputs.agenix.overlay
               ];
+              # workaround plasma apps install https://github.com/NixOS/nixpkgs/issues/148452
+              nixpkgs.config = {
+                allowAliases = false;
+                allowUnfree = true;
+              };
 
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
