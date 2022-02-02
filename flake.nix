@@ -50,15 +50,20 @@
                 allowAliases = false;
                 allowUnfree = true;
               };
-
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
             })
 
             (./. + "/hosts/${hostname}/configuration.nix")
-            (./. + "/users/edrex.nix")
-            inputs.agenix.nixosModules.age
+            (./. + "/home/edrex.nix")
             inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.edrex = import ./home;
+
+              # Optionally, use home-manager.extraSpecialArgs to pass
+              # arguments to home.nix
+            }
+            inputs.agenix.nixosModules.age
           ];
           specialArgs = { inherit inputs; };
         };
