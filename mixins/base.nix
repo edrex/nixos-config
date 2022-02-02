@@ -15,7 +15,7 @@
     iotop
     iftop
     git
-    vim
+    neovim
     wget
     curl
     tcpdump
@@ -25,6 +25,8 @@
     file
     lsof
     inotify-tools
+    psmisc
+    usbutils
     strace
     gdb
     # xz
