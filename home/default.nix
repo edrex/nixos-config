@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   imports =
     [
-      ./sway.nix
+      ./hackerui
       ./vscode.nix
     ];
 

@@ -11,9 +11,9 @@
       ./keyboards.nix
       ../../mixins/base.nix
       ../../profiles/laptop.nix
-      ../../profiles/hackerui.nix
       ../../profiles/plasma.nix
       ../../profiles/vmhost.nix
+      ../../services/greetd.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
