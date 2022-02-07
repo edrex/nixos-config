@@ -14,14 +14,17 @@
     swaylock
     swayidle
     wl-clipboard
+    brightnessctl
+    wlsunset
+    poweralertd
     mako # notification daemon
-    alacritty # Alacritty is the default terminal in the config
+    foot # Alacritty is the default terminal in the config
     dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
   ];
-  /*
-  - [ ] wrapper is provided by hm?
-  - [ ] custom sway config
-    - via a string (cuz I already have it)
-  - [ ] kanshi or some other display layout automation
-  */
+
+  services.wlsunset = {
+    enable = true;
+    latitude = "45.5";
+    longitude = "-122.6";
+  }; 
 }

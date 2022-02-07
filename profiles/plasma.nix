@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 {
   # Enable the X11 windowing system.
+  # boo
   services.xserver.enable = true;
 
   # Enable the Plasma 5 Desktop Environment.
@@ -11,6 +12,4 @@
   ] ++ builtins.filter lib.isDerivation (builtins.attrValues plasma5Packages.kdeGear)
     ++ builtins.filter lib.isDerivation (builtins.attrValues plasma5Packages.kdeFrameworks)
     ++ builtins.filter lib.isDerivation (builtins.attrValues plasma5Packages.plasma5);
-
-  programs.ssh.askPassword = "ksshaskpass";
 }

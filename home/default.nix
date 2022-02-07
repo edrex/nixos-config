@@ -1,12 +1,21 @@
 { pkgs, ... }: {
   imports =
     [
+      ./fonts.nix
       ./hackerui
-      ./vscode.nix
+      ./apps/vscode.nix
+      ./apps/browser.nix
     ];
+/*
+- [x] sway Tap to click
+- [ ] wpa sup?
+- [ ] term
+    - font?
+- [ ] 
+*/
 
   home.packages = with pkgs; [
-    # TODO: put this in notetaking.nix
+    # TODO: put this in edrex/noteshell
     obsidian
     tig
     bottom
@@ -14,13 +23,14 @@
     hledger-web
     pulsemixer
     gh
+    gopass
   ];
 
   services = {
-    # gpg-agent = {
-    #   enable = true;
-    #   enableSshSupport = true;
-    # };
+    gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+    };
     syncthing = {
       enable = true;
       tray.enable = true;
@@ -39,16 +49,6 @@
       };
       
     };
-    keychain = {
-      enable = true;
-      agents = [ "ssh" ];
-      # keys = [ "id_ed25519" ];
-      # Work around https://github.com/nix-community/home-manager/issues/2256
-      enableBashIntegration = false;
-    };
-    # ssh = {
-    #   startAgent = true;
-    # };
 
     git = {
       enable = true;

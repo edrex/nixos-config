@@ -8,10 +8,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../mixins/wireless-client.nix
       ./keyboards.nix
       ../../mixins/base.nix
       ../../profiles/laptop.nix
-      ../../profiles/plasma.nix
+      # ../../profiles/plasma.nix
       ../../profiles/vmhost.nix
       ../../services/greetd.nix
     ];
@@ -20,8 +21,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # TODO: make this implicit/module
   networking.hostName = "chip"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -55,6 +56,8 @@
   # sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  # TODO: profiles/display.nix
+  hardware.opengl.enable = true;
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
