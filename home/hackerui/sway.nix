@@ -2,6 +2,9 @@
 # TODO: let's split all the non-sway stuff off, and make it work with river too
 # kitchen sink config I can crib off of:
 # https://github.com/cole-mickens/nixcfg/blob/main/mixins/sway.nix
+  /*
+  - [ ] wrapper is provided by hm?
+  */
 let
   # idle/lock
   # TODO: test and fix/ remove this message
@@ -10,6 +13,8 @@ let
     lock \"${swaylockcmd}\" \
     timeout 600 \"${pkgs.systemd}/bin/systemctl suspend\" \
     resume 'swaymsg \"output * dpms on\"' '';
+  #term = "exec-with-pwd $TERMINAL";
+  term = "$TERMINAL";
 in 
 {
   wayland.windowManager.sway = {
@@ -30,11 +35,18 @@ in
           tap = "enabled";
           dwt = "enabled";
         };
+        "1267:8400:ELAN_Touchscreen" = {
+          map_to_output = "eDP-1";
+        };
       };
 
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
       in lib.mkOptionDefault {
+	      "${modifier}+Return" = "exec $TERMINAL"; 
+	      "${modifier}+Shift+grave" = "move scratchpad";
+	      "${modifier}+grave" = "scratchpad show";
+
         # TODO: notif, maybe wob
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
         "XF86MonBrightnessDown"  = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 2%-";
@@ -42,14 +54,6 @@ in
         "Shift+XF86MonBrightnessDown"  = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
       };
 /*
-#output * bg /usr/share/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-
-input "1267:8400:ELAN_Touchscreen" map_to_output eDP-1
-input "1739:30383:DLL075B:01_06CB:76AF_Touchpad" {
-	tap enabled
-	dwt enabled
-}
-
 # scroll wheel on lauren's mouse is slooooowwwww
 #input "1118:1957:Microsoft_Microsoft___2.4GHz_Transceiver_v9.0_Mouse" scroll_factor 10
 input "1452:781:Dennis___s_Mouse" scroll_factor 3
@@ -64,13 +68,6 @@ exec poweralertd
 exec wlsunset -l 45.5 -L -122.6
 #exec albert #launcher
 exec swaymsg command seat "*" hide_cursor 5000
-exec swayidle -w\
-    idlehint 120 \
-    timeout 600 'swaymsg "output * dpms off"' \
-       resume 'swaymsg "output * dpms on"' \
-    timeout 1200 'swaylock-blur -- -f' \
-    before-sleep 'swaylock-blur -- -f'
-    # timeout 1800 'systemctl suspend' \
 
 for_window [instance=mpv] floating enable, sticky enable
 for_window [app_id="firefox"] inhibit_idle fullscreen
@@ -97,14 +94,11 @@ set $winmenu "i3-windows-and-run --menu \"wofi\" -- -id"
 
 bindsym $mod+Return exec $term
 #bindsym $mod+Shift+Return exec $interm code .
-bindsym $mod+q kill
-bindsym $mod+Shift+c kill
 bindsym $mod+d exec $menu
 bindsym $mod+Space exec i3cmd_exec "floating enable" foot tydra ~/src/github.com/edrex/begin/actions.yaml
 bindsym $mod+Shift+d exec $winmenu
 bindsym $mod+Shift+r reload
 bindsym $mod+m exec wlr-randr --output eDP-1 --off --output DP-1 --transform normal
-bindsym $mod+Shift+m sh -c "kanshi & sleep 3 ; kill %%"
 #assign [title="journal"] 8
 # bindsym $mod+i exec $interm journal -p
 bindsym $mod+i exec org-capture
@@ -361,10 +355,4 @@ client.background       #F8F8F2
     };
   };
 
-  /*
-  - [ ] wrapper is provided by hm?
-  - [ ] custom sway config
-    - via a string (cuz I already have it)
-  - [ ] kanshi or some other display layout automation
-  */
 }

@@ -4,6 +4,7 @@
 
   imports = [
     ../services/ssh.nix
+    ./fonts.nix
   ];
 
   # mount tmpfs on /tmp

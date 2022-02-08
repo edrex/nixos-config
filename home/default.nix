@@ -3,8 +3,10 @@
     [
       ./fonts.nix
       ./hackerui
-      ./apps/vscode.nix
+      ./apps/vscode
+      ./apps/neovim.nix
       ./apps/browser.nix
+      ./apps/term.nix
     ];
 /*
 - [x] sway Tap to click
@@ -59,34 +61,6 @@
         push = { default = "current"; };
         pull = { rebase = true; };
       };
-    };
-    neovim = {
-      enable = true;
-      # package = neovim-nightly;
-      viAlias = true;
-      vimAlias = true;
-      # withNodeJs = true;
-
-      extraPackages = [
-        # himalaya
-      ];
-
-      plugins = with pkgs.vimPlugins; [
-        vim-airline
-        papercolor-theme
-
-        #(pkgs.vimUtils.buildVimPlugin {
-        #  name = "himalaya";
-        #  src = himalayaSrc + "/vim";
-        #})
-      ];
-
-      extraConfig = ''
-        " papercolor-theme
-        " set t_Co=256   " This is may or may not needed.
-        set background=light
-        colorscheme PaperColor
-      '';
     };
     direnv = {
       enable = true;
