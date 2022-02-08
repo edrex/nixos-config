@@ -1,5 +1,7 @@
 { config, pkgs, lib, ... }:
 {
+  # for login shell, i think?
+  programs.fish.enable = true;
   users.extraUsers.edrex = {
     isNormalUser = true;
     extraGroups = lib.mkDefault [ "wheel" "networkmanager" "audio" "video" "docker" "libvirtd" "plugdev" ];

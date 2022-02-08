@@ -3,6 +3,7 @@
     [
       ./fonts.nix
       ./hackerui
+      ./misc/env.nix
       ./apps/vscode
       ./apps/neovim.nix
       ./apps/browser.nix

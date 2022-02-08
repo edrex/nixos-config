@@ -1,8 +1,4 @@
 { pkgs, ... }: {
-  imports =
-    [
-      ./nix.nix
-    ];
 
   home.packages = with pkgs; [
     nixpkgs-fmt

@@ -4,10 +4,6 @@
       ./nix.nix
     ];
 
-  home.packages = with pkgs; [
-    nixpkgs-fmt
-  ];
-
   programs.vscode = {
     enable = true;
     # package = pkgs.vscodium;
@@ -15,11 +11,11 @@
       vscodevim.vim
       jnoortheen.nix-ide
     ];
+    userSettings = {
+      "vim.useSystemClipboard" = true;
+      "vim.highlightedyank.enable" = true;
+      # "workbench.colorTheme" = "Default Dark+";
+      "editor.minimap.enabled" = false;
+    };
   };
-  # settings = {
-  #   # "nix.enableLanguageServer" = true;
-  #   "nix.formatterPath" = "${nixpkgs-fmt}/bin/nixpkgs-fmt";
-  #   "nix.serverPath" = "${rnix-lsp}/bin/rnix-lsp";
-  # };
-
 }

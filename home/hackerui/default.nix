@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   imports = [ 
     ./sway.nix
-    ./kanshi.nix
+    ./displays.nix
   ];
 
 
@@ -17,8 +17,9 @@
     brightnessctl
     wlsunset
     poweralertd
+    # TODO: comp fnott
     mako # notification daemon
-    foot # Alacritty is the default terminal in the config
+    foot
     dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
   ];
 

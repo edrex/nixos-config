@@ -2,6 +2,8 @@
 # TODO: let's split all the non-sway stuff off, and make it work with river too
 # kitchen sink config I can crib off of:
 # https://github.com/cole-mickens/nixcfg/blob/main/mixins/sway.nix
+# really close match to my config needs: https://codeberg.org/imMaturana/nixos-config
+# https://git.sr.ht/~jshholland/nixos-configs/tree
   /*
   - [ ] wrapper is provided by hm?
   */
@@ -14,7 +16,9 @@ let
     timeout 600 \"${pkgs.systemd}/bin/systemctl suspend\" \
     resume 'swaymsg \"output * dpms on\"' '';
   #term = "exec-with-pwd $TERMINAL";
-  term = "$TERMINAL";
+  #TODO: is this in my sway env already?
+  term = config.home.sessionVariables.TERMINAL;
+  
 in 
 {
   wayland.windowManager.sway = {
@@ -43,7 +47,8 @@ in
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
       in lib.mkOptionDefault {
-	      "${modifier}+Return" = "exec $TERMINAL"; 
+
+        "${modifier}+Return" = "exec ${term}";
 	      "${modifier}+Shift+grave" = "move scratchpad";
 	      "${modifier}+grave" = "scratchpad show";
 
@@ -52,6 +57,14 @@ in
         "XF86MonBrightnessDown"  = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 2%-";
         "Shift+XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +10%";
         "Shift+XF86MonBrightnessDown"  = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
+
+
+        "${modifier}+XF86AudioMute" = "mode passthrough";
+      };
+      modes = {
+        passthrough = {
+          "${modifier}+XF86AudioMute" = "mode default";
+        };
       };
 /*
 # scroll wheel on lauren's mouse is slooooowwwww
