@@ -4,6 +4,7 @@
       ./fonts.nix
       ./hackerui
       ./misc/env.nix
+      ./services/gpg-agent.nix
       ./apps/vscode
       ./apps/neovim.nix
       ./apps/browser.nix
