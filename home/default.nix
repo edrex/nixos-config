@@ -28,6 +28,7 @@
     pulsemixer
     gh
     gopass
+    fishPlugins.foreign-env # fenv command
   ];
 
   services = {

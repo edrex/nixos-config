@@ -11,6 +11,7 @@
   };
 
   home.packages = with pkgs; [
+    xdg-utils # todo: xdg compat basics import
     swaylock
     swayidle
     wl-clipboard
@@ -25,6 +26,7 @@
 
   services.wlsunset = {
     enable = true;
+    # TODO: wire up a location service. Goes along with light/dark UI changes too IMO
     latitude = "45.5";
     longitude = "-122.6";
   }; 
