@@ -1,7 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+    nixpkgs.follows = "nixpkgs-unstable";
 
     # nixos-hardware.url = github:NixOS/nixos-hardware/master;
     # nixos-hardware.url = "path:/home/eric/src/github.com/NixOS/nixos-hardware";
