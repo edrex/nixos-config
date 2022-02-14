@@ -20,6 +20,7 @@
     wget
     curl
     tcpdump
+    parted
     # whois
     # mtr
     # siege
