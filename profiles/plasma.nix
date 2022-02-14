@@ -1,5 +1,11 @@
 { config, pkgs, lib, ... }:
 {
+  nixpkgs.config = {
+    # workaround plasma apps install https://github.com/NixOS/nixpkgs/issues/148452
+    # Maybe a way to patch just the one package tho?
+    allowAliases = false;
+  };
+
   # Enable the X11 windowing system.
   # boo
   services.xserver.enable = true;

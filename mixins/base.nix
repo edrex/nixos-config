@@ -46,7 +46,7 @@
     jq
     # yq
     # gitAndTools.gitFull
-    agenix
+    # agenix
     cachix
   ];
 

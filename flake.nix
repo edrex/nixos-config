@@ -3,17 +3,18 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixos-hardware.url = github:NixOS/nixos-hardware/master;
+    # nixos-hardware.url = github:NixOS/nixos-hardware/master;
     # nixos-hardware.url = "path:/home/eric/src/github.com/NixOS/nixos-hardware";
 
+    # TODO: consider switching to sops-nix
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url =  "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-    emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    # emacs-overlay.url = "github:nix-community/emacs-overlay";
+    # emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs:
@@ -25,6 +26,7 @@
             ({ pkgs, ... }: {
               # cache stuff
               nix = {
+                # needed for nixos-21.11
                 package = pkgs.nixUnstable;
                 useSandbox = true;
                 autoOptimiseStore = true;
@@ -45,10 +47,12 @@
               nixpkgs.overlays = [
                 inputs.agenix.overlay
               ];
-              # workaround plasma apps install https://github.com/NixOS/nixpkgs/issues/148452
               nixpkgs.config = {
-                allowAliases = false;
                 allowUnfree = true;
+                # till obsidian is updated https://github.com/NixOS/nixpkgs/issues/158956
+                permittedInsecurePackages = [
+                  "electron-13.6.9"
+                ];
               };
             })
 

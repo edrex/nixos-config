@@ -46,6 +46,12 @@ in
 
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
+        dirBind = keys: cmd: {
+          "${keys}+h" = "${cmd} left";
+          "${keys}+l" = "${cmd} right";
+          "${keys}+j" = "${cmd} down";
+          "${keys}+k" = "${cmd} up";
+        };
       in lib.mkOptionDefault {
 
         "${modifier}+Return" = "exec ${term}";
@@ -58,9 +64,14 @@ in
         "Shift+XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +10%";
         "Shift+XF86MonBrightnessDown"  = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
 
+# move workspace to other output
+# bindsym $mod+Ctrl+Shift+$left move workspace to output left
+# bindsym $mod+Ctrl+Shift+$down move workspace to output down
+# bindsym $mod+Ctrl+Shift+$up move workspace to output up
+# bindsym $mod+Ctrl+Shift+$right move workspace to output right
 
         "${modifier}+XF86AudioMute" = "mode passthrough";
-      };
+      } // dirBind "${modifier}+Ctrl+Shift" "move workspace to output";
       modes = {
         passthrough = {
           "${modifier}+XF86AudioMute" = "mode default";
