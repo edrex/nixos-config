@@ -1,4 +1,7 @@
 { pkgs, ... }: {
+  imports = [
+    ../../mixins/pipewire.nix
+  ];
 
   programs.sway = {
     enable = true;
