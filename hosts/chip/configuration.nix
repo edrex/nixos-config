@@ -12,6 +12,7 @@
       ./keyboards.nix
       ../../mixins/base.nix
       ../../profiles/laptop.nix
+      ../../profiles/wayland
       # ../../profiles/plasma.nix
       ../../profiles/vmhost.nix
       ../../services/greetd.nix

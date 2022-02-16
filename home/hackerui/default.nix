@@ -11,6 +11,7 @@
   };
 
   home.packages = with pkgs; [
+    slurp
     xdg-utils # todo: xdg compat basics import
     swaylock
     swayidle
