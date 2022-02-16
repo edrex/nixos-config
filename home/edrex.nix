@@ -4,7 +4,7 @@
   programs.fish.enable = true;
   users.extraUsers.edrex = {
     isNormalUser = true;
-    extraGroups = lib.mkDefault [ "wheel" "networkmanager" "audio" "video" "docker" "libvirtd" "plugdev" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "docker" "libvirtd" "plugdev" ];
     shell = pkgs.fish;
     hashedPassword = "$6$99syLpQ4jX2X/J3Q$Xov5YQEdpQa5VU6KsnAVrT7Mj1toF9nbpMCyQK9PMn.8po5ky7a.9Kix/fegVzcwsVl7qxh1yIk4ulTzV3xml.";
     # TODO: move to HM?

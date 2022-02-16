@@ -1,10 +1,10 @@
 {
   inputs = {
-    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-21.11";
+    # nixpkgs-master.url = "github:nixos/nixpkgs";
     nixpkgs.follows = "nixpkgs-unstable";
+    # nixpkgs-hack.url = "path:/home/edrex/o/src/github.com/NixOS/nixpkgs";
 
     # nixos-hardware.url = github:NixOS/nixos-hardware/master;
     # nixos-hardware.url = "path:/home/eric/src/github.com/NixOS/nixos-hardware";
@@ -30,10 +30,13 @@
               # cache stuff
               nix = {
                 # needed for nixos-21.11
-                package = pkgs.nixUnstable;
-                useSandbox = true;
-                autoOptimiseStore = true;
+                # package = pkgs.nixUnstable;
                 # readOnlyStore = false;
+                settings = {
+                  auto-optimise-store = true;
+                  sandbox = true;
+                };
+                
                 extraOptions = ''
                   experimental-features = nix-command flakes
                   # keep-outputs = true
