@@ -23,6 +23,13 @@
     mako # notification daemon
     foot
     dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
+    lswt
+    # themes
+    gtk-engine-murrine
+    gtk_engines
+    gsettings-desktop-schemas
+    lxappearance
+    qt5ct
   ];
 
   services.wlsunset = {

@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, nixosConfig, lib, ... }:
 # TODO: let's split all the non-sway stuff off, and make it work with river too
 # kitchen sink config I can crib off of:
 # https://github.com/cole-mickens/nixcfg/blob/main/mixins/sway.nix
@@ -23,7 +23,6 @@ in
 {
   wayland.windowManager.sway = {
     enable = true;
-    wrapperFeatures.gtk = true ;
     config = rec {
       modifier = "Mod4";
       startup = [
@@ -64,6 +63,11 @@ in
         "Shift+XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +10%";
         "Shift+XF86MonBrightnessDown"  = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
 
+        # http://blog.kopis.de/2015/07/21/changing-volume-using-pactl/
+        "XF86AudioRaiseVolume" = "exec pactl set-sink-volume $(${pkgs.pulseaudio}/bin/pactl list short sinks|grep RUNNING|${pkgs.gawk}/bin/awk '{print $1}') +5% ";
+        "XF86AudioLowerVolume" = "exec pactl set-sink-volume $(${pkgs.pulseaudio}/bin/pactl list short sinks|grep RUNNING|${pkgs.gawk}/bin/awk '{print $1}') -5% ";
+        "XF86AudioMute" = "exec pactl set-sink-mute $(${pkgs.pulseaudio}/bin/pactl list short sinks|grep RUNNING|${pkgs.gawk}/bin/awk '{print $1}') toggle";
+
 # move workspace to other output
 # bindsym $mod+Ctrl+Shift+$left move workspace to output left
 # bindsym $mod+Ctrl+Shift+$down move workspace to output down
@@ -77,6 +81,11 @@ in
           "${modifier}+XF86AudioMute" = "mode default";
         };
       };
+
+      # clearly mark xwayland windows
+      window.commands = [
+        { command = "title_format \"<span background='#FFA0A0' foreground='#000000'>%title</span>\""; criteria = { shell = "xwayland"; } ; }
+      ];
 /*
 # scroll wheel on lauren's mouse is slooooowwwww
 #input "1118:1957:Microsoft_Microsoft___2.4GHz_Transceiver_v9.0_Mouse" scroll_factor 10
@@ -377,6 +386,10 @@ client.background       #F8F8F2
 
 */
     };
-  };
-
+  } // (if nixosConfig.programs.sway.enable
+  then {
+    package = null;
+  } else {
+    wrapperFeatures.gtk = true ;
+  });
 }
