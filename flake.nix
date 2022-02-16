@@ -50,8 +50,21 @@
                 registry.nixpkgs.flake = inputs.nixpkgs;
               };
 
-              nixpkgs.overlays = [
+              nixpkgs.overlays = with inputs; [
                 inputs.agenix.overlay
+                # https://www.lucacambiaghi.com/nixpkgs/readme.html
+                (
+                  final: prev:
+                  let
+                    system = prev.stdenv.system;
+                    # nixpkgs-stable = if system == "x86_64-darwin" then nixpkgs-stable-darwin else nixos-stable;
+                  in {
+                    # master = nixpkgs-master.legacyPackages.${system};
+                    stable = nixpkgs-stable.legacyPackages.${system};
+                    vivaldi = final.callPackage ./pkgs/vivaldi.nix { };
+                    lswt = final.callPackage ./pkgs/lswt.nix { }; # https://github.com/NixOS/nixpkgs/pull/158529
+                 }
+                )
               ];
               nixpkgs.config = {
                 allowUnfree = true;
