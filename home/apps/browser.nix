@@ -1,7 +1,7 @@
 { pkgs, ... }: {
    
   home.packages = with pkgs; [
-    vivaldi
+    # vivaldi
     firefox-wayland
     chromium
   ];
