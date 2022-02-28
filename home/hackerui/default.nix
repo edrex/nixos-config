@@ -10,6 +10,13 @@
     wrapperFeatures.gtk = true ;
   };
 
+  programs.rofi = {
+    enable = true; 
+    package = pkgs.rofi-wayland.override {
+      plugins = [ pkgs.rofi-emoji ];
+    };
+  };
+
   home.packages = with pkgs; [
     slurp
     xdg-utils # todo: xdg compat basics import
@@ -21,8 +28,11 @@
     poweralertd
     # TODO: comp fnott
     mako # notification daemon
+    libnotify # for notify-send
     foot
     dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
+    rofimoji
+    wtype
     lswt
     # themes
     gtk-engine-murrine

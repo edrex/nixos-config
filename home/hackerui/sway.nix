@@ -53,9 +53,14 @@ in
         };
       in lib.mkOptionDefault {
 
+        "${modifier}+Shift+r" = "reload";
+        "${modifier}+Shift+c" = "exec ${pkgs.rofimoji}/bin/rofimoji"; # unset
+
         "${modifier}+Return" = "exec ${term}";
 	      "${modifier}+Shift+grave" = "move scratchpad";
 	      "${modifier}+grave" = "scratchpad show";
+
+
 
         # TODO: notif, maybe wob
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
