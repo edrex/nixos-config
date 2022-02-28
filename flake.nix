@@ -63,15 +63,12 @@
                     stable = nixpkgs-stable.legacyPackages.${system};
                     vivaldi = final.callPackage ./pkgs/vivaldi.nix { };
                     lswt = final.callPackage ./pkgs/lswt.nix { }; # https://github.com/NixOS/nixpkgs/pull/158529
+                    obsidian = final.callPackage ./pkgs/obsidian.nix { }; # https://github.com/NixOS/nixpkgs/pull/160469
                  }
                 )
               ];
               nixpkgs.config = {
                 allowUnfree = true;
-                # till obsidian is updated https://github.com/NixOS/nixpkgs/issues/158956
-                permittedInsecurePackages = [
-                  "electron-13.6.9"
-                ];
               };
             })
 
