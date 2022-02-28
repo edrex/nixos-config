@@ -20,6 +20,7 @@
     wget
     curl
     tcpdump
+    dig
     parted
     # whois
     # mtr
