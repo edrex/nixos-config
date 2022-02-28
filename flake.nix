@@ -1,8 +1,8 @@
 {
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-21.11";
-    # nixpkgs-master.url = "github:nixos/nixpkgs";
+    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-21.11";
+    nixpkgs-master.url = "github:nixos/nixpkgs";
     nixpkgs.follows = "nixpkgs-unstable";
     # nixpkgs-hack.url = "path:/home/edrex/o/src/github.com/NixOS/nixpkgs";
 
@@ -29,8 +29,8 @@
             ({ pkgs, ... }: {
               # cache stuff
               nix = {
-                # needed for nixos-21.11
-                # package = pkgs.nixUnstable;
+                # watch https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/package-management/nix/default.nix
+                package = pkgs.master.nixUnstable;
                 # readOnlyStore = false;
                 settings = {
                   auto-optimise-store = true;
@@ -59,6 +59,9 @@
                     system = prev.stdenv.system;
                     # nixpkgs-stable = if system == "x86_64-darwin" then nixpkgs-stable-darwin else nixos-stable;
                   in {
+                    master = nixpkgs-master.legacyPackages.${system};
+                    # stable = nixpkgs-stable.legacyPackages.${system};
+                    vivaldi = final.callPackage ./pkgs/vivaldi.nix { }; # https://github.com/NixOS/nixpkgs/pull/160234
                     wtype = final.callPackage ./pkgs/wtype.nix { }; # https://github.com/NixOS/nixpkgs/pull/162134
                     lswt = final.callPackage ./pkgs/lswt.nix { }; # https://github.com/NixOS/nixpkgs/pull/158529
                     obsidian = final.callPackage ./pkgs/obsidian.nix { }; # https://github.com/NixOS/nixpkgs/pull/160469
@@ -72,7 +75,7 @@
 
             (./. + "/hosts/${hostname}/configuration.nix")
             (./. + "/home/edrex.nix")
-            inputs.home-manager.nixosModules.home-manager
+            inputs.home-manager.nixosModules.home-manager # https://rycee.gitlab.io/home-manager/index.html#sec-install-nixos-module
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
