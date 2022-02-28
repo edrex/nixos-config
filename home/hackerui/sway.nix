@@ -3,7 +3,7 @@
 # kitchen sink config I can crib off of:
 # https://github.com/cole-mickens/nixcfg/blob/main/mixins/sway.nix
 # really close match to my config needs: https://codeberg.org/imMaturana/nixos-config
-# https://git.sr.ht/~jshholland/nixos-configs/tree
+# https://git.sr.ht/~jshholland/nixos-configs/tree/master/home/sway.nix
   /*
   - [ ] wrapper is provided by hm?
   */
@@ -45,16 +45,20 @@ in
 
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
-        dirBind = keys: cmd: {
-          "${keys}+h" = "${cmd} left";
-          "${keys}+l" = "${cmd} right";
-          "${keys}+j" = "${cmd} down";
-          "${keys}+k" = "${cmd} up";
+        dirBind = f: lib.attrsets.mapAttrs' f {
+          h = "left";
+          l = "right";
+          j = "down";
+          k = "up";
+          Left = "left";
+          Right = "right";
+          Down = "down";
+          Up = "up";
         };
-      in lib.mkOptionDefault {
+      in lib.mkOptionDefault ({
 
         "${modifier}+Shift+r" = "reload";
-        "${modifier}+Shift+c" = "exec ${pkgs.rofimoji}/bin/rofimoji"; # unset
+        "${modifier}+Shift+c" = "exec ${pkgs.rofimoji}/bin/rofimoji -a clipboard";
 
         "${modifier}+Return" = "exec ${term}";
 	      "${modifier}+Shift+grave" = "move scratchpad";
@@ -73,14 +77,8 @@ in
         "XF86AudioLowerVolume" = "exec pactl set-sink-volume $(${pkgs.pulseaudio}/bin/pactl list short sinks|grep RUNNING|${pkgs.gawk}/bin/awk '{print $1}') -5% ";
         "XF86AudioMute" = "exec pactl set-sink-mute $(${pkgs.pulseaudio}/bin/pactl list short sinks|grep RUNNING|${pkgs.gawk}/bin/awk '{print $1}') toggle";
 
-# move workspace to other output
-# bindsym $mod+Ctrl+Shift+$left move workspace to output left
-# bindsym $mod+Ctrl+Shift+$down move workspace to output down
-# bindsym $mod+Ctrl+Shift+$up move workspace to output up
-# bindsym $mod+Ctrl+Shift+$right move workspace to output right
-
         "${modifier}+XF86AudioMute" = "mode passthrough";
-      } // dirBind "${modifier}+Ctrl+Shift" "move workspace to output";
+      } // dirBind (dirKey: dir: { name = "${modifier}+Ctrl+Shift+${dirKey}"; value = "move workspace to output ${dir}";}));
       modes = {
         passthrough = {
           "${modifier}+XF86AudioMute" = "mode default";
