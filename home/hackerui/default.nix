@@ -47,4 +47,23 @@
     latitude = "45.5";
     longitude = "-122.6";
   }; 
+
+
+  # TODO: put this in a toolkits include
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.gnome3.adwaita-icon-theme;
+    };
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome3.gnome-themes-extra;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+  };
+
+
 }
