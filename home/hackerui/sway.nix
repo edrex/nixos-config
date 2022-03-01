@@ -2,7 +2,6 @@
 # TODO: let's split all the non-sway stuff off, and make it work with river too
 # kitchen sink config I can crib off of:
 # https://github.com/cole-mickens/nixcfg/blob/main/mixins/sway.nix
-# really close match to my config needs: https://codeberg.org/imMaturana/nixos-config
 # https://git.sr.ht/~jshholland/nixos-configs/tree/master/home/sway.nix
   /*
   - [ ] wrapper is provided by hm?
@@ -26,7 +25,6 @@ in
     config = rec {
       modifier = "Mod4";
       startup = [
-        { always = true; command = "${pkgs.mako}/bin/mako"; }
         { always = true; command = "${pkgs.systemd}/bin/systemd-notify --ready || true"; }
         { always = true; command = "${idlecmd}"; }
         { command = "${pkgs.poweralertd}/bin/poweralertd"; }
@@ -66,16 +64,15 @@ in
 
 
 
-        # TODO: notif, maybe wob
+        # TODO: notif, maybe wob 
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
         "XF86MonBrightnessDown"  = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 2%-";
         "Shift+XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +10%";
         "Shift+XF86MonBrightnessDown"  = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
 
-        # http://blog.kopis.de/2015/07/21/changing-volume-using-pactl/
-        "XF86AudioRaiseVolume" = "exec pactl set-sink-volume $(${pkgs.pulseaudio}/bin/pactl list short sinks|grep RUNNING|${pkgs.gawk}/bin/awk '{print $1}') +5% ";
-        "XF86AudioLowerVolume" = "exec pactl set-sink-volume $(${pkgs.pulseaudio}/bin/pactl list short sinks|grep RUNNING|${pkgs.gawk}/bin/awk '{print $1}') -5% ";
-        "XF86AudioMute" = "exec pactl set-sink-mute $(${pkgs.pulseaudio}/bin/pactl list short sinks|grep RUNNING|${pkgs.gawk}/bin/awk '{print $1}') toggle";
+        "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer-notify}/bin/pamixer-notify -i 5";
+        "XF86AudioLowerVolume" = "exec ${pkgs.pamixer-notify}/bin/pamixer-notify -d 5";
+        "XF86AudioMute" = "exec ${pkgs.pamixer-notify}/bin/pamixer-notify -t";
 
         "${modifier}+XF86AudioMute" = "mode passthrough";
       } // dirBind (dirKey: dir: { name = "${modifier}+Ctrl+Shift+${dirKey}"; value = "move workspace to output ${dir}";}));

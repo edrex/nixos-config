@@ -1,7 +1,9 @@
 { pkgs, ... }: {
+# really close match to my config needs: https://codeberg.org/imMaturana/nixos-config
   imports = [ 
     ./sway.nix
     ./displays.nix
+    ./notify.nix
   ];
 
 
@@ -26,9 +28,6 @@
     brightnessctl
     wlsunset
     poweralertd
-    # TODO: comp fnott
-    mako # notification daemon
-    libnotify # for notify-send
     foot
     dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
     rofimoji

@@ -4,6 +4,8 @@
   imports =
     [
       ./hardware.nix
+      ../mixins/sound.nix
+
     ];
 
   # temperature / power consumption
@@ -12,16 +14,4 @@
   services.thermald.enable = true;
   powerManagement.powertop.enable = true;
   # TODO: crib off of https://discourse.nixos.org/t/fan-keeps-spinning-with-a-base-installation-of-nixos/1394/3
-  # TODO: sound.nix
-  # services.pipewire = {
-  #   enable = true;
-
-  #   # Simulate backends for programs expecting them
-  #   alsa = {
-  #     enable = true;
-  #     support32Bit = true;
-  #   };
-  #   pulse.enable = true;
-
-  # };
 }

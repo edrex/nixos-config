@@ -65,6 +65,7 @@
                     wtype = final.callPackage ./pkgs/wtype.nix { }; # https://github.com/NixOS/nixpkgs/pull/162134
                     lswt = final.callPackage ./pkgs/lswt.nix { }; # https://github.com/NixOS/nixpkgs/pull/158529
                     obsidian = final.callPackage ./pkgs/obsidian.nix { }; # https://github.com/NixOS/nixpkgs/pull/160469
+                    pamixer-notify = final.callPackage ./pkgs/pamixer-notify.nix { };
                  }
                 )
               ];

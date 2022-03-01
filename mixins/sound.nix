@@ -5,14 +5,15 @@
 
   security.rtkit.enable = true; # ?
 
-  nixpkgs.config.pulseaudio = true;
+  # nixpkgs.config.pulseaudio = true;
   #hardware.pulseaudio.enable = true; # we're trying pipewire
   hardware.pulseaudio.enable = pkgs.lib.mkForce false;
 
   users.extraUsers.edrex.extraGroups = [ "jackaudio" ];
   
   environment.systemPackages = with pkgs; [
-    helvum
+    # helvum
+    pamixer
   ];
   
   programs.dconf.enable = true;
@@ -23,9 +24,9 @@
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    alsa.support32Bit = true; # ?
+    alsa.support32Bit = true; # for old games, wine etc?
     pulse.enable = true;
-    jack.enable = true;
+    # jack.enable = true;
 
     media-session.config.bluez-monitor.rules = [
       {
