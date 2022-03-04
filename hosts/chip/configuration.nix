@@ -54,11 +54,11 @@
   services.printing.enable = true;
 
   # Enable sound.
-  # sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  sound.enable = true;
   # This module was automatically suspending my mic in the middle of conferencing.
   # TODO: why is this happening? Bug in HW?
   hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
+  hardware.bluetooth.enable = true;
 
   # TODO: profiles/display.nix
   hardware.opengl.enable = true;

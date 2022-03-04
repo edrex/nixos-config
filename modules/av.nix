@@ -1,25 +1,21 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+with lib; {
+  options.edrex.sound = {
+    enable = mkEnableOption "Enable sound";
+  };
   xdg.portal.wlr.enable = true;
-
   security.rtkit.enable = true; # ?
+  hardware.pulseaudio.enable = mkForce false;
 
-  # nixpkgs.config.pulseaudio = true;
-  #hardware.pulseaudio.enable = true; # we're trying pipewire
-  hardware.pulseaudio.enable = pkgs.lib.mkForce false;
-
+  #TODO: put this in a config key?
   users.extraUsers.edrex.extraGroups = [ "jackaudio" ];
   
   environment.systemPackages = with pkgs; [
-    # helvum
     pamixer
   ];
   
   programs.dconf.enable = true;
-  # home-manager.users.cole = { pkgs, ... }: {
-  #   services.easyeffects.enable = (pkgs.system == "x86_64-linux"); # TODO: ew, also why?
-  # };
 
   services.pipewire = {
     enable = true;
@@ -28,7 +24,7 @@
     pulse.enable = true;
     # jack.enable = true;
 
-    media-session.config.bluez-monitor.rules = [
+    media-session.config.bluez-monitor.rules = mkIf (config.hardware.bluetooth.enable) [
       {
         # Matches all cards
         matches = [ { "device.name" = "~bluez_card.*"; } ];

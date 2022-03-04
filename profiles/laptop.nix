@@ -4,8 +4,6 @@
   imports =
     [
       ./hardware.nix
-      ../mixins/sound.nix
-
     ];
 
   # temperature / power consumption
