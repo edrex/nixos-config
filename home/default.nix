@@ -23,8 +23,8 @@
     obsidian
     tig
     bottom
-    hledger
-    hledger-web
+    # hledger
+    # hledger-web
     pulsemixer
     gh
     gopass
@@ -48,9 +48,9 @@
       shellAliases = {
         g = "${pkgs.git}/bin/git";
         t = "${pkgs.tig}/bin/tig";
-        l = "${pkgs.exa}/bin/exa";
-        ll = "${pkgs.exa}/bin/exa -l";
-        ls = "l";
+        # l = "${pkgs.exa}/bin/exa";
+        # ll = "${pkgs.exa}/bin/exa -l";
+        # ls = "l";
       };
       
     };

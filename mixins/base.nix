@@ -7,8 +7,18 @@
     ./fonts.nix
   ];
 
-  # mount tmpfs on /tmp
-  # boot.tmpOnTmpfs = lib.mkDefault true;
+  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+  # Per-interface useDHCP will be mandatory in the future, so this generated config
+  # replicates the default behaviour.
+  networking.useDHCP = false;
+
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
+  # console = {
+  #   font = "Lat2-Terminus16";
+  #   keyMap = "us";
+  # };
 
   # install basic packages
   environment.systemPackages = with pkgs; [
