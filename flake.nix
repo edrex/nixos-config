@@ -6,7 +6,7 @@
     nixpkgs.follows = "nixpkgs-unstable";
     # nixpkgs-hack.url = "path:/home/edrex/o/src/github.com/NixOS/nixpkgs";
 
-    # nixos-hardware.url = github:NixOS/nixos-hardware/master;
+    nixos-hardware.url = github:NixOS/nixos-hardware/master;
     # nixos-hardware.url = "path:/home/eric/src/github.com/NixOS/nixos-hardware";
 
     # TODO: consider switching to sops-nix
@@ -22,10 +22,14 @@
 
   outputs = inputs:
     let
-      mkSystem = pkgs: system: hostname:
-        pkgs.lib.nixosSystem {
+      mkSystem = { host, system ? "x86_64-linux", extra-modules ? []}:
+      let
+        lib = inputs.nixpkgs.lib;
+      in
+        lib.nixosSystem {
           system = system;
           modules = [
+            ./modules
             ({ pkgs, ... }: {
               # cache stuff
               nix = {
@@ -73,8 +77,7 @@
                 allowUnfree = true;
               };
             })
-
-            (./. + "/hosts/${hostname}/configuration.nix")
+            (./. + "/hosts/${host}/configuration.nix")
             (./. + "/home/edrex.nix")
             inputs.home-manager.nixosModules.home-manager # https://rycee.gitlab.io/home-manager/index.html#sec-install-nixos-module
             {
@@ -86,16 +89,27 @@
               # arguments to home.nix
             }
             inputs.agenix.nixosModules.age
-          ];
+          ] ++ extra-modules;
           specialArgs = { inherit inputs; };
         };
     in {
       nixosConfigurations = {
-        chip = mkSystem inputs.nixpkgs "x86_64-linux" "chip";
-        pidrive = mkSystem inputs.nixpkgs "aarch64-linux" "pidrive";
-        whitecanyon = mkSystem inputs.nixpkgs "aarch64-linux" "whitecanyon";
-        silversurfer = mkSystem inputs.nixpkgs "x86_64-linux" "silversurfer";
+        chip = mkSystem {
+          host = "chip";
+          extra-modules = [ inputs.nixos-hardware.nixosModules.dell-xps-13-9360 ];
+        };
+        pidrive = mkSystem {
+          host = "pidrive";
+          system = "aarch64-linux";
+        };
+        whitecanyon = mkSystem {
+          host = "whitecanyon";
+          system = "aarch64-linux";
+        };
+        silversurfer = mkSystem {
+          host = "silversurfer";
         #TODO: inputs.nixos-hardware.nixosModules.apple-macbook-pro-2-2
+        };
 
       };
     };
