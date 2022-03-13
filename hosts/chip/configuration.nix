@@ -2,19 +2,20 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, nixos-hardware, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  imports = [
       ./hardware-configuration.nix
       ./keyboards.nix
+      ./edid.nix
       ../../mixins/wireless-client.nix
       ../../mixins/base.nix
       ../../profiles/laptop.nix
       ../../profiles/wayland
       ../../profiles/vmhost.nix
       ../../services/greetd.nix
+      ../../services/code-server.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
