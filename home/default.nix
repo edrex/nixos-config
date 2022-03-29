@@ -2,7 +2,7 @@
   imports =
     [
       ./fonts.nix
-      ./hackerui
+      ./graphical-shell
       ./misc/env.nix
       ./services/gpg-agent.nix
       ./apps/vscode

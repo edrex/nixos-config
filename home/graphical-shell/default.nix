@@ -1,5 +1,6 @@
 { pkgs, ... }: {
 # really close match to my config needs: https://codeberg.org/imMaturana/nixos-config
+# todo: rename to "shell" (and module system)
   imports = [ 
     ./sway.nix
     ./displays.nix
