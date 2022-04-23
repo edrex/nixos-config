@@ -74,6 +74,11 @@ in
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer-notify}/bin/pamixer-notify -d 5";
         "XF86AudioMute" = "exec ${pkgs.pamixer-notify}/bin/pamixer-notify -t";
 
+        # toggle hide bar
+        # bindsym $mod+Shift+b bar mode toggle
+	      "${modifier}+Shift+b" = "bar mode toggle";
+	      # "${modifier}+Shift+b" = "exec killall -SIGUSR1 waybar";
+
         "${modifier}+XF86AudioMute" = "mode passthrough";
       } // dirBind (dirKey: dir: { name = "${modifier}+Ctrl+Shift+${dirKey}"; value = "move workspace to output ${dir}";}));
       modes = {
