@@ -62,7 +62,7 @@ in
 	      "${modifier}+Shift+grave" = "move scratchpad";
 	      "${modifier}+grave" = "scratchpad show";
 
-
+	      "${modifier}+Ctrl+s" = "exec screenshot";
 
         # TODO: notif, maybe wob 
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
@@ -73,9 +73,8 @@ in
         "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer-notify}/bin/pamixer-notify -i 5";
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer-notify}/bin/pamixer-notify -d 5";
         "XF86AudioMute" = "exec ${pkgs.pamixer-notify}/bin/pamixer-notify -t";
-
+        
         # toggle hide bar
-        # bindsym $mod+Shift+b bar mode toggle
 	      "${modifier}+Shift+b" = "bar mode toggle";
 	      # "${modifier}+Shift+b" = "exec killall -SIGUSR1 waybar";
 

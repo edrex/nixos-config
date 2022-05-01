@@ -5,6 +5,7 @@
     ./sway.nix
     ./displays.nix
     ./notify.nix
+    ./screenshots.nix
   ];
 
 
