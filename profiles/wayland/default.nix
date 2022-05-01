@@ -26,4 +26,15 @@
       #systemd-cat --identifier=sway sway $@
     '';
   };
+  services.xserver = {
+  enable = true;
+   displayManager = {
+     sessionPackages = [ pkgs.river ];
+     lightdm.enable = true;
+   };
+  };
+  environment.systemPackages = with pkgs; [
+    river
+  ];
+
 }
