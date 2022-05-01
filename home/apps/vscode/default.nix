@@ -6,7 +6,9 @@
 
   programs.vscode = {
     enable = true;
+    package = pkgs.vscode;
     # package = pkgs.vscodium;
+    # package = pkgs.vscode-insider;
     extensions = with pkgs.vscode-extensions; [
       vscodevim.vim
       jnoortheen.nix-ide

@@ -1,0 +1,1 @@
+[lucernae/nixos-pi: How to install NixOS on raspberry PI](https://github.com/lucernae/nixos-pi)

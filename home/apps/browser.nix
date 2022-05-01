@@ -4,6 +4,7 @@
     # vivaldi
     firefox-wayland
     chromium
+    qutebrowser
   ];
   programs = {
     browserpass.enable = true;
@@ -23,4 +24,7 @@
       ];
     };
   };
+  # TODO: tweaks to enable accel
+  # https://forum.manjaro.org/t/howto-enable-hardware-video-acceleration-video-decode-in-google-chrome-brave-vivaldi-and-opera-browsers/51895
+  # chrome://gpu/
 }

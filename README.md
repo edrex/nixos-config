@@ -1,4 +1,4 @@
-# Eric Drechsel\'s NixOS configs
+# Eric Drechsel's NixOS configs
 
 Configurations for my [NixOS](https://nixos.org/) systems.
 
@@ -16,107 +16,8 @@ Configurations for my [NixOS](https://nixos.org/) systems.
 Having watched NixOS come together from my aging Arch install and mess
 of Debian servers for several years, I\'m finally making the jump!
 
-## Nix reading
 
-### Nix / NixOS basics
 
-- <https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector>
-- [A Nix terminology primer by a
-    newcomer](https://stephank.nl/p/2020-06-01-a-nix-primer-by-a-newcomer.html)
-
-### Nix language
-
-- <https://nixos.org/guides/nix-pills/functions-and-imports.html>
-
-### Terminology
-
-### Configs
-
-with flakes: <https://github.com/utdemir/dotfiles>
-<https://github.com/cideM/dotfiles>
-
-pre-flakes: <https://codeberg.org/davidak/nixos-config> (overall
-structure) <https://github.com/colemickens/nixcfg>
-<https://github.com/NixOS/nixos-hardware>
-
-User envs: StumpWM/emacs:
-[TLATER/dotfiles](https://github.com/TLATER/dotfiles)
-
-### Flakes
-
-Official reference: [nix
-flake](https://nixos.org/manual/nix/unstable/command-ref/new-cli/nix3-flake.html)
-Supplementary/meh: <https://nixos.wiki/wiki/Flakes>
-
-1.  nixos configs
-
-    <https://github.com/nrdxp/nixflk> [y\|sndr - Building with Nix
-    Flakes for, eh ..
-    reasons!](https://blog.ysndr.de/posts/internals/2021-01-01-flake-ification/)
-
-2.  Qs
-
-    1.  Different nixpkgs per package output (nixosSystem)?
-
-        <https://discourse.nixos.org/t/hostname-based-flake-lock/10578>
-
-    2.  And Homemanager
-
-    3.  Howto boot
-
-### Home Manager
-
-<https://www.reddit.com/r/NixOS/comments/j3wvun/what_role_does_home_manager_fill_that_nixos_cant/>
-<https://www.google.com/search?q=nix%20home-manager%20and%20flakes>
-<https://www.reddit.com/r/NixOS/comments/iogoox/homemanager_with_flakes_on_non_nixos_system/>
-
-### Conference Talks
-
-[NixCon - YouTube](https://www.youtube.com/c/NixCon/videos)
-
-### Direnv
-
-<https://github.com/nix-community/nix-direnv>
-
-### Philosophy
-
-1.  [Erase your darlings: immutable infrastructure for mutable systems -
-    Graham Ch...](https://grahamc.com/blog/erase-your-darlings)
-
-# Things I\'ve learned
-
-## Modules
-
-### Multiple assignments to the same option are merged with a type-specific strategy
-
--   [How/why do imports result in string concatenation for attributes? :
-    NixOS](https://www.reddit.com/r/NixOS/comments/cb42yk/howwhy_do_imports_result_in_string_concatenation/)
--   [NixOS 20.09 manual: Writing
-    modules](https://nixos.org/manual/nixos/stable/index.html#sec-writing-modules)
-
-## Overlays
-
--   Function final: prev: { setOfPackages }
-
-<https://nixos.org/manual/nixpkgs/stable/#sec-overlays-definition>
-
-## Flakes
-
-### fetchUrl with sha256 is pure (and thus allowed in flakes)
-
--   [Nix Flakes with non-Git inputs :
-    NixOS](https://www.reddit.com/r/NixOS/comments/kvizxg/nix_flakes_with_nongit_inputs/)
-
-# Research
-
-## Emacs
-
-[emacsPgtkGcc emacs-overlay/default.nix at
-6f1b47652747b10b6e7e42377baf2bafb95cc854 ·
-nix-community/emacs-overlay](https://github.com/nix-community/emacs-overlay/blob/6f1b47652747b10b6e7e42377baf2bafb95cc854/default.nix#L94)
-[Dan Girshovich - neurosys](https://dangirsh.org/projects/neurosys.html)
-<https://tecosaur.github.io/emacs-config/> [vlaci/nix-doom-emacs:
-doom-emacs packaged for Nix](https://github.com/vlaci/nix-doom-emacs)
 
 # Tasks
 
