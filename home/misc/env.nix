@@ -5,7 +5,6 @@
 {
   home.sessionVariables = {
     # environment variables
-    BROWSER = "${pkgs.vivaldi}/bin/vivaldi";
     EDITOR = "${pkgs.neovim}/bin/nvim";
   };
 

@@ -1,9 +1,16 @@
 { config, pkgs, lib, ... }: {
-  networking.wireless = {
-    enable = true;  # Enables wireless support via wpa_supplicant.
-    # userControlled.enable = true;
+  networking = {
+    # wireless = {
+    #   # Enables wireless support via wpa_supplicant.
+    #   enable = true;  
+    #   # userControlled.enable = true;
+
+    # };
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
   };
-  
 
   # TODO: iwd is faster right?
   #  environment.systemPackages = with pkgs; [

@@ -35,8 +35,11 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable CUPS to print documents.
+  # TODO: printing mixin
   services.printing.enable = true;
-
+  services.printing.drivers = with pkgs; [
+    hplip
+  ]; 
   # gate settings
   sound.enable = true;
   hardware.bluetooth.enable = true;

@@ -5,7 +5,7 @@ with lib; {
     enable = mkEnableOption "Enable sound";
   };
   config = {
-    xdg.portal.wlr.enable = true;
+
     security.rtkit.enable = true; # ?
     hardware.pulseaudio.enable = mkForce false;
 
