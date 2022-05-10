@@ -8,7 +8,6 @@
   imports = [
       ./hardware-configuration.nix
       ./keyboards.nix
-      ./edid.nix
       ../../mixins/wireless-client.nix
       ../../mixins/base.nix
       ../../profiles/laptop.nix

@@ -2,6 +2,7 @@
 
   home.packages = with pkgs; [
     nixpkgs-fmt
+    rnix-lsp
   ];
 
   programs.vscode.extensions = with pkgs.vscode-extensions; [
