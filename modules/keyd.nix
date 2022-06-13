@@ -15,40 +15,24 @@ in
     services.keyd = {
       enable = mkEnableOption "keyd daemon for remapping keys";
 
-      package = mkOption {
-        type = types.package;
-        default = pkgs.keyd;
-        defaultText = literalExpression "pkgs.keyd";
-        description = ''
-          KeyD Package to use.
-        '';
-      };
+      package = mkPackageOption pkgs "keyd" { };
 
       configuration = mkOption {
-        type = types.attrsOf (types.submodule ({ config, options, ... }: {
-          options = {
-            text = mkOption {
-              type = types.lines;
-              default = null;
-            };
-          };
-        }));
+        type = types.attrsOf (types.lines);
 
         default = {};
 
         description = ''
-          What the filename should be for configuration files for keyd (Multiple are allowed in keyd).
+          Attribute set of keyd configuration strings. See https://github.com/rvaiya/keyd/blob/master/docs/keyd.scdoc
         '';
       };
     };
   };
 
   config = mkIf cfg.enable {
-    users.groups.keyd = {
-      gid = 994;
-    };
+    users.groups.keyd = { };
     environment = {
-      etc = lib.attrsets.mapAttrs' (name: tcfg: nameValuePair "keyd/${name}.conf" { text = tcfg.text; }) cfg.configuration;
+      etc = lib.attrsets.mapAttrs' (name: tcfg: nameValuePair "keyd/${name}.conf" { text = tcfg; }) cfg.configuration;
       systemPackages = [ cfg.package ];
     };
 

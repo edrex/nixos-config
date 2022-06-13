@@ -1,4 +1,4 @@
-{ lib, stdenv, python39Packages, python39, fetchFromGitHub }:
+{ lib, stdenv, python3Packages, python3, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   pname = "keyd";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-YZSwXDrzly5OlNh8j+Y2/qYmGHXE5T3ZAvq7e45jVL0=";
   };
 
-  makeFlags = [ "DESTDIR=${placeholder "out"}" ];
+  makeFlags = [ "DESTDIR=${placeholder "out"}" "PREFIX="];
 
   buildInputs = [ python3 python3Packages.xlib ];
 
