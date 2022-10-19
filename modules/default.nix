@@ -9,6 +9,6 @@
 
   imports = [
     ./av.nix
-    ./bluetooth.nix
+    ./backup.nix
   ];
 }

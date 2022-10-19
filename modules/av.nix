@@ -1,28 +1,29 @@
 { config, pkgs, lib, ... }:
 
 with lib; {
-  options.edrex.sound = {
-    enable = mkEnableOption "Enable sound";
-  };
+  # options.edrex.sound = {
+  #   enable = mkEnableOption "Enable sound";
+  # };
+  # lib.mkIf (config.hardware.bluetooth.enable) {
+  #   services.blueman.enable = true; 
+  # } //
   config = {
-
     security.rtkit.enable = true; # ?
     hardware.pulseaudio.enable = mkForce false;
-
-    #TODO: put this in a config key?
-    users.extraUsers.edrex.extraGroups = [ "jackaudio" ];
     
     environment.systemPackages = with pkgs; [
       pamixer
+      pavucontrol
     ];
     
     programs.dconf.enable = true;
-
     services.pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true; # for old games, wine etc?
       pulse.enable = true;
+
+      # users.extraUsers.edrex.extraGroups = [ "jackaudio" ];
       # jack.enable = true;
 
       media-session.config.bluez-monitor.rules = mkIf (config.hardware.bluetooth.enable) [

@@ -1,4 +1,24 @@
 { pkgs, ... }: {
+  # way too broad, just for gsettings stuff
+  # services.xserver.desktopManager.gnome.enable = true;
+ 
+  environment.systemPackages = with pkgs; [
+    wdisplays
+    river
+    xdg-utils
+    wlr-randr
+    imv # i guess this should be in a module with basic userspace stuff
+  ];
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${lib.makeBinPath [pkgs.greetd.tuigreet] }/tuigreet --time --cmd sway";
+        user = "greeter";
+      };
+    };
+  };
 
   programs.sway = {
     enable = true;
@@ -25,5 +45,15 @@
 
       #systemd-cat --identifier=sway sway $@
     '';
+  };
+  xdg = {
+    portal = {
+      enable = true;
+      wlr.enable = true;
+      extraPortals = with pkgs; [
+        # xdg-desktop-portal-gtk
+      ];
+      gtkUsePortal = true;
+    };
   };
 }

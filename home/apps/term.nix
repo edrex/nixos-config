@@ -9,6 +9,10 @@ in {
     TERMINAL = "${pkgs.foot}/bin/foot";
   };
 
+  home.packages = with pkgs; [
+    fzf
+  ];
+
   programs = {
     alacritty = {
       enable = true;

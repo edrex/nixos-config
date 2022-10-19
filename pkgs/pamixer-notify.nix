@@ -3,7 +3,7 @@
 writeShellApplication {
   name = "pamixer-notify";
 
-  runtimeInputs = with pkgs; [ libnotify pamixer ];
+  runtimeInputs = with pkgs; [ libnotify wireplumber];
 
   text = ''
     number=$(pamixer "$@" --get-volume)

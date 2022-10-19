@@ -6,10 +6,20 @@
 
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode;
+    # package = pkgs.vscode;
+    # package = pkgs.vscode-fhs;
     # package = pkgs.vscodium;
-    # package = pkgs.vscode-insider;
-    extensions = with pkgs.vscode-extensions; [
+
+    # # Snippet to use insiders build
+    # package = (pkgs.vscode.override{ isInsiders = true; }).overrideAttrs (oldAttrs: rec {
+    #   src = (builtins.fetchTarball {
+    #     url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
+    #     sha256 = "1nngzi1xdznmrzll9n9yrjiffyajqpw2s03yyd3rfd724m710frx";
+    #   });
+    #   version = "latest";
+    # });
+    
+    extensions = with pkgs.vscode-extensions; [      
       vscodevim.vim
       jnoortheen.nix-ide
     ];

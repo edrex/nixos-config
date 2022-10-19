@@ -17,7 +17,6 @@ let
   #term = "exec-with-pwd $TERMINAL";
   #TODO: is this in my sway env already?
   term = config.home.sessionVariables.TERMINAL;
-  
 in 
 {
   wayland.windowManager.sway = {

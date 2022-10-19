@@ -3,7 +3,7 @@
     enable = true;
     # [dunst doesn't display icons · Issue #139 · dunst-project/dunst](https://github.com/dunst-project/dunst/issues/139)
     iconTheme = {
-      package = pkgs.gnome3.adwaita-icon-theme;
+      package = pkgs.gnome.adwaita-icon-theme;
       name = "Adwaita";
     };
     # settings = {

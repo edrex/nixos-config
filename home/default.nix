@@ -1,14 +1,13 @@
 { pkgs, ... }: {
   imports =
     [
-      ./fonts.nix
       ./graphical-shell
-      ./misc/env.nix
-      ./services/gpg-agent.nix
+       # ./term
       ./apps/vscode
       ./apps/neovim.nix
       ./apps/browser.nix
       ./apps/term.nix
+      ./apps/comms.nix
     ];
 /*
 - [x] sway Tap to click
@@ -17,6 +16,8 @@
     - font?
 - [ ] 
 */
+
+  home.stateVersion = "21.11";
 
   home.packages = with pkgs; [
     # TODO: put this in edrex/noteshell
@@ -29,6 +30,7 @@
     gh
     gopass
     fishPlugins.foreign-env # fenv command
+    gnupg
   ];
 
   services = {
@@ -72,25 +74,6 @@
         enable = true;
       };
     };
-
-    starship =
-      {
-        enable = true;
-        settings = {
-          # username = {
-          #   format = "[$user](bold blue) ";
-          #   disabled = false;
-          #   show_always = true;
-          # };
-          # hostname = {
-          #   ssh_only = false;
-          #   format = "on [$hostname](bold red) ";
-          #   trim_at = ".companyname.com";
-          #   disabled = false;
-          # };
-        };
-      };
-
     bat.enable = true;
     autojump.enable = false;
     zoxide.enable = true;

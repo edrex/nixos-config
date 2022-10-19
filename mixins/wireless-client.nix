@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }: {
+  # systemd.services.NetworkManager-wait-online.enable = false;
   networking = {
     # wireless = {
     #   # Enables wireless support via wpa_supplicant.
@@ -12,9 +13,9 @@
     };
   };
 
-  # TODO: iwd is faster right?
-  #  environment.systemPackages = with pkgs; [
-  #    iw
-  #  ];
+  # iwd is faster right?
+   environment.systemPackages = with pkgs; [
+     iw
+   ];
   # networking.wireless.iwd.enable = true;
 }

@@ -1,8 +1,0 @@
-* Emissary Config
-  A cloud VPS server on Digital Ocean
-
-  Inspiration:
-   - https://codeberg.org/davidak/nixos-config/src/branch/master/machines/atomic
-
-** Services
-*** TODO Wordpress (laurenhudgins.com)

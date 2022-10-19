@@ -11,23 +11,21 @@
       ../../mixins/wireless-client.nix
       ../../mixins/base.nix
       ../../profiles/laptop.nix
-      ../../profiles/wayland
+      ../../profiles/wayland.nix
       ../../profiles/vmhost.nix
-      ../../services/greetd.nix
-      ../../services/code-server.nix
+      ../../profiles/infosec.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # TODO: make this implicit/module
   networking.hostName = "chip"; # Define your hostname.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
-  networking.interfaces.wlp58s0.useDHCP = true;
+  # networking.interfaces.wlp58s0.useDHCP = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
