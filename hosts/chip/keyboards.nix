@@ -1,31 +1,10 @@
 { pkgs, ... }:
 
 {
-  # imports = [
-  #   ../../modules/keyd.nix
-  # ];
-
-  #   # This is such a hack.
-  #   # It runs as root, and does things that are important at the application level,
-  #   # a complete violation of layering.
-  #   # It would make more sense to transform input events in the shell,
-  #   # but for now I will use keyd just to handle tapping mod keys
-  #   services.keyd = {
-  #     enable = true;
-  #     package = pkgs.callPackage ../../pkgs/keyd.nix {};
-  #     configuration = {
-  #       myShell = ''
-  #         [ids]
-
-  #         *
-
-  #         [main]
-
-  #         # tap meta for root menu
-  #         meta = overload(meta, M-space)
-  #       '';
-  #     };
-  #   };
+ # install packages
+  environment.systemPackages = [
+    pkgs.evtest
+  ];
 
   # Guide to remapping keys on Linux using hwdb files
   # https://www.reddit.com/r/linux_gaming/comments/nypsi1/updated_guide_to_remapping_keys_on_linux_using/

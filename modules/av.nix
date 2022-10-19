@@ -7,27 +7,31 @@ with lib; {
   # lib.mkIf (config.hardware.bluetooth.enable) {
   #   services.blueman.enable = true; 
   # } //
-  config = {
-    security.rtkit.enable = true; # ?
-    hardware.pulseaudio.enable = mkForce false;
-    
-    environment.systemPackages = with pkgs; [
-      pamixer
-      pavucontrol
-    ];
-    
-    programs.dconf.enable = true;
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true; # for old games, wine etc?
-      pulse.enable = true;
+  config = lib.mkMerge [
+    {
+      security.rtkit.enable = true; # ?
+      hardware.pulseaudio.enable = mkForce false;
+      
+      environment.systemPackages = with pkgs; [
+        pamixer
+        pavucontrol
+      ];
+      
+      programs.dconf.enable = true;
+      services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true; # for old games, wine etc?
+        pulse.enable = true;
 
-      # users.extraUsers.edrex.extraGroups = [ "jackaudio" ];
-      # jack.enable = true;
-
-      media-session.config.bluez-monitor.rules = mkIf (config.hardware.bluetooth.enable) [
-        {
+        # users.extraUsers.edrex.extraGroups = [ "jackaudio" ];
+        # jack.enable = true;
+      };
+    } 
+    (lib.mkIf (config.hardware.bluetooth.enable) {
+      # https://nixos.wiki/wiki/Bluetooth
+      services.blueman.enable = true;
+      services.pipewire.media-session.config.bluez-monitor.rules = [{
           # Matches all cards
           matches = [ { "device.name" = "~bluez_card.*"; } ];
           actions = {
@@ -52,6 +56,6 @@ with lib; {
           };
         }
       ];
-    };
-  };
+    })
+  ];
 }

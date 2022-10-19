@@ -5,7 +5,8 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../mixins/wireless-client.nix
+      ../../profiles/base.nix
+      ../../profiles/wireless-client.nix
       ../../profiles/hardware.nix
     ];
 

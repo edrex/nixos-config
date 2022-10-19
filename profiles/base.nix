@@ -61,6 +61,8 @@
     usbutils
     strace
     gdb
+    ## Infosec
+      nmap
     # nix x dev
     nixpkgs-review
     nix-tree

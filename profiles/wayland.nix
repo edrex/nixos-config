@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   # way too broad, just for gsettings stuff
   # services.xserver.desktopManager.gnome.enable = true;
  
@@ -8,6 +8,8 @@
     xdg-utils
     wlr-randr
     imv # i guess this should be in a module with basic userspace stuff
+    gnome.gnome-software
+    gnome.nautilus
   ];
 
   services.greetd = {
@@ -46,14 +48,17 @@
       #systemd-cat --identifier=sway sway $@
     '';
   };
-  xdg = {
-    portal = {
-      enable = true;
-      wlr.enable = true;
-      extraPortals = with pkgs; [
-        # xdg-desktop-portal-gtk
-      ];
-      gtkUsePortal = true;
-    };
+
+
+  # flatpak support
+  services.flatpak.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = with pkgs; [
+      # xdg-desktop-portal-gtk
+    ];
+    gtkUsePortal = true;
   };
+
 }

@@ -33,8 +33,7 @@
     foot
     dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
     rofimoji
-    wtype
-    lswt
+    wtype #TODO: eval for removal
     # themes
     gtk-engine-murrine
     gtk_engines

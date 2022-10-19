@@ -8,12 +8,11 @@
   imports = [
       ./hardware-configuration.nix
       ./keyboards.nix
-      ../../mixins/wireless-client.nix
-      ../../mixins/base.nix
+      ../../profiles/base.nix
       ../../profiles/laptop.nix
       ../../profiles/wayland.nix
+      ../../profiles/wireless-client.nix
       ../../profiles/vmhost.nix
-      ../../profiles/infosec.nix
     ];
 
   # Use the systemd-boot EFI boot loader.

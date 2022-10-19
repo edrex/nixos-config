@@ -61,7 +61,6 @@
                       #   config.allowUnfree = true;
                       # };
                     in {
-                      lswt = final.callPackage ./pkgs/lswt.nix { }; # https://github.com/NixOS/nixpkgs/pull/158529
                       # TODO: move this into desktop shell repo
                       pamixer-notify = final.callPackage ./pkgs/pamixer-notify.nix { };
                     }
