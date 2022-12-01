@@ -1,4 +1,9 @@
 {
+  nixConfig = {
+    extra-substituters = "https://nix-community.cachix.org";
+    extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+  };
+
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.follows = "nixpkgs-unstable";
@@ -9,13 +14,34 @@
       flake = false;
     };
 
-    nixos-hardware.url = github:NixOS/nixos-hardware/master;
-
-    agenix.url = "github:ryantm/agenix"; # consider switching to sops-nix
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     home-manager.url =  "github:nix-community/home-manager/release-22.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    
+    agenix.url = "github:ryantm/agenix"; # consider switching to sops-nix
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    nil = {
+      url = "github:oxalica/nil";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
+    helix = {
+      url = "github:helix-editor/helix";
+    };
+
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
   };
 
   outputs = inputs:
@@ -49,8 +75,9 @@
                 registry.nixpkgs.flake = inputs.nixpkgs;
               };
               nixpkgs = {
-                overlays = with inputs; [
+                overlays = [
                   inputs.agenix.overlay
+                  inputs.emacs-overlay.overlay
                   # https://www.lucacambiaghi.com/nixpkgs/readme.html
                   (
                     final: prev:
@@ -63,6 +90,10 @@
                     in {
                       # TODO: move this into desktop shell repo
                       pamixer-notify = final.callPackage ./pkgs/pamixer-notify.nix { };
+                      helix =
+                        if system == "x86_64-linux"
+                        then inputs.helix.outputs.packages.${pkgs.hostPlatform.system}.helix 
+                        else pkgs.helix;
                     }
                   )
                 ];

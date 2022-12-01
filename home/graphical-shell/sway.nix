@@ -7,6 +7,8 @@
   - [ ] wrapper is provided by hm?
   */
 let
+  # TODO: Menu
+  # TODO: https://github.com/altdesktop/playerctl
   # idle/lock
   # TODO: test and fix/ remove this message
   swaylockcmd = "${pkgs.swaylock}/bin/swaylock";
@@ -389,6 +391,9 @@ client.background       #F8F8F2
 
 */
     };
+
+
+    extraConfig = "seat seat0 xcursor_theme Adwaita 24\n";
   } // (if nixosConfig.programs.sway.enable
   then {
     package = null;

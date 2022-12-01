@@ -61,4 +61,9 @@
     gtkUsePortal = true;
   };
 
+  # experimental. do i need any/all of these for automount?
+  
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
 }

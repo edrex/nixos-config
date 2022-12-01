@@ -24,15 +24,19 @@
   # Doesn't seem possible anymore:
   # https://fossies.org/linux/systemd/hwdb/parse_hwdb.py
 
+  # see also https://github.com/systemd/systemd/blob/main/hwdb.d/60-keyboard.hwdb
   services.udev.extraHwdb = ''
 # this matches all input devices i think
-evdev:input:*
+# bad idea since it results in lots of err: failed to call EVIOCSKEYCODE with scan code 
+# evdev:input:*
+evdev:name:Goldtouch Bluetooth Keyboard:dmi:bvn*:bvr*:bd*:svn*:pn*
  KEYBOARD_KEY_700e2=leftmeta
  KEYBOARD_KEY_700e6=rightmeta
  KEYBOARD_KEY_700e3=leftalt
  KEYBOARD_KEY_70039=esc
 
 # from evemu-describe
+# builtin keyboard
 evdev:input:b0011v0001p0001*
 ## evdev:atkbd:dmi:bvn*:bvr*:bd*:svn*:pn*:pvr*
  KEYBOARD_KEY_3a=esc
@@ -40,7 +44,6 @@ evdev:input:b0011v0001p0001*
  KEYBOARD_KEY_b8=rightmeta
  KEYBOARD_KEY_db=leftalt
 
-# evdev:name:Kinesis KB800MB-BT:dmi:bvn*:bvr*:bd*:svn*:pn*
 
 evdev:input:b0005v0A5Cp8502*
  KEYBOARD_KEY_70039=esc

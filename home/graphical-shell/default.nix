@@ -31,7 +31,7 @@
     wlsunset
     poweralertd
     foot
-    dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
+    wofi
     rofimoji
     wtype #TODO: eval for removal
     # themes

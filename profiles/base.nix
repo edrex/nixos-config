@@ -61,6 +61,8 @@
     usbutils
     strace
     gdb
+    # dev:c
+    cmake
     ## Infosec
       nmap
     # nix x dev
@@ -82,8 +84,10 @@
     jq
     # yq
     # gitAndTools.gitFull
-    # agenix
+    # nix dev
+    agenix
     cachix
+    diffoscope
   ];
 
   programs.bash.enableCompletion = true;

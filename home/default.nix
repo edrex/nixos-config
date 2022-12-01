@@ -5,6 +5,8 @@
        # ./term
       ./apps/vscode
       ./apps/neovim.nix
+      ./apps/emacs
+      ./apps/helix.nix
       ./apps/browser.nix
       ./apps/term.nix
       ./apps/comms.nix
@@ -18,6 +20,8 @@
 */
 
   home.stateVersion = "21.11";
+  # workaround https://github.com/nix-community/home-manager/issues/3342
+  manual.manpages.enable = false; 
 
   home.packages = with pkgs; [
     # TODO: put this in edrex/noteshell
@@ -49,10 +53,7 @@
       enable = true;
       shellAliases = {
         g = "${pkgs.git}/bin/git";
-        t = "${pkgs.tig}/bin/tig";
-        # l = "${pkgs.exa}/bin/exa";
-        # ll = "${pkgs.exa}/bin/exa -l";
-        # ls = "l";
+        e = "emacsclient -nc";
       };
       
     };
