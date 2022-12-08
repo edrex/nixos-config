@@ -1,0 +1,9 @@
+[init]
+	defaultBranch = "main"
+
+[push]
+	default = "current"
+
+[user]
+	email = "eric@pdxhub.org"
+	name = "Eric Drechsel"

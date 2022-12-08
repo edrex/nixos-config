@@ -1,0 +1,5 @@
+# Aliases
+alias d 'date +%Y-%m-%d'
+alias e 'hx'
+alias g 'git'
+alias j 'hx ~/wiki/$(d).md'

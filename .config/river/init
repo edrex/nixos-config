@@ -1,0 +1,257 @@
+#!/bin/sh
+
+# Use the "logo" key as the primary modifier
+mod="Mod4"
+# for running nested to test
+#mod="Mod1" #alt
+
+#TODO: make these work in river?
+EMPTY_TERM="exec-with-pwd $TERMINAL"
+#winmenu="i3-windows-and-run --menu \"wofi\" -- -id"
+
+interm=$TERMINAL # some terms need -e for exec etc
+browser=qutebrowser
+
+
+case "$(hostname)" in
+	# "tarazed")
+		# term="alacritty"
+		# launch_term="alacritty --class launcher -e"
+		# sublayout="columns"
+		# riverctl input "1149:4128:Kensington_Expert_Mouse" accel-profile flat
+		# riverctl input "1149:4128:Kensington_Expert_Mouse" pointer-accel 0.0
+		# riverctl input "1149:4128:Kensington_Expert_Mouse" scroll-method button
+		# riverctl input "1149:4128:Kensington_Expert_Mouse" scroll-button BTN_SIDE
+		# riverctl spawn "wlr-randr --output 'eDP-1' --off --output HDMI-A-1 --custom-mode 2560x1080@60Hz"
+		# riverctl spawn "swaybg -m fill -i \"$(find /home/leon/Pictures/Wallpaper/ | shuf -n1)\""
+		# ;;
+
+	"chip")
+		# term="foot"
+		# launch_term="foot --app-id launcher"
+		# sublayout="stack"
+		riverctl input 1739:30383:DLL075B:01_06CB:76AF_Touchpad tap enabled
+		# riverctl map normal None XF86Launch1 spawn "wlopm --toggle LVDS-1"
+		;;
+esac
+#riverctl spawn "albert # launcher"
+riverctl spawn "mako --default-timeout 10000 # notifications"
+riverctl map normal $mod Escape spawn "makoctl dismiss"
+riverctl spawn "kanshi" #auto output layout
+riverctl spawn river-tag-overlay
+riverctl spawn "swayidle -w\
+    idlehint 120 \
+    timeout 600 'swaymsg \"output * dpms off\"' \
+       resume 'swaymsg \"output * dpms on\"' \
+    timeout 1200 'swaylock-blur -- -f' \
+    before-sleep 'swaylock-blur -- -f'"
+
+
+riverctl background-color       "0x404040"
+riverctl border-color-unfocused "0x202020"
+riverctl border-color-focused   "0xF0F0F0"
+riverctl border-width 1
+riverctl xcursor-theme tarazed
+gsettings set org.gnome.desktop.interface gtk-theme Adwaita
+gsettings set org.gnome.desktop.interface icon-theme Breeze
+gsettings set org.gnome.desktop.wm.preferences button-layout " "
+gsettings set org.gnome.desktop.interface cursor-theme tarazed
+
+riverctl map normal $mod+Shift Return spawn "$TERMINAL"
+#riverctl map normal $mod D spawn "albert toggle"
+riverctl map normal $mod d spawn "wofi -p 'Type app or command' --show drun,run -i"
+riverctl map normal $mod i spawn "$interm journal -p "
+riverctl map normal $mod+Shift i spawn "$interm journal -pf"
+riverctl map normal $mod o spawn "$interm wf"
+riverctl map normal $mod+Shift o spawn "$interm wff"
+
+riverctl map normal $mod+Control s spawn "screenshot"
+# start recording a video
+riverctl map normal $mod+Control+Shift s spawn "$interm "screencap""
+riverctl map normal $mod n spawn "networkmanager_dmenu"
+riverctl map normal $mod b spawn "btmenu"
+
+
+riverctl map normal $mod Q close
+riverctl map normal $mod+Shift E exit
+
+# Mod+J and Mod+K to focus the next/previous view in the layout stack
+riverctl map normal $mod J focus-view next
+riverctl map normal $mod K focus-view previous
+
+# Mod+Shift+J and Mod+Shift+K to swap the focused view with the next/previous
+# view in the layout stack
+riverctl map normal $mod+Shift J swap next
+riverctl map normal $mod+Shift K swap previous
+
+# Mod+Period and Mod+Comma to focus the next/previous output
+riverctl map normal $mod Period focus-output next
+riverctl map normal $mod Comma focus-output previous
+
+# Mod+Shift+{Period,Comma} to send the focused view to the next/previous output
+riverctl map normal $mod+Shift Period send-to-output next
+riverctl map normal $mod+Shift Comma send-to-output previous
+
+# Mod+Return to bump the focused view to the top of the layout stack
+riverctl map normal $mod Return zoom
+
+# Mod+Alt+{H,J,K,L} to move views
+riverctl map normal $mod+Mod1 H move left 100
+riverctl map normal $mod+Mod1 J move down 100
+riverctl map normal $mod+Mod1 K move up 100
+riverctl map normal $mod+Mod1 L move right 100
+
+# Mod+Alt+Control+{H,J,K,L} to snap views to screen edges
+riverctl map normal $mod+Mod1+Control H snap left
+riverctl map normal $mod+Mod1+Control J snap down
+riverctl map normal $mod+Mod1+Control K snap up
+riverctl map normal $mod+Mod1+Control L snap right
+
+# Mod+Alt+Shif+{H,J,K,L} to resize views
+riverctl map normal $mod+Mod1+Shift H resize horizontal -100
+riverctl map normal $mod+Mod1+Shift J resize vertical 100
+riverctl map normal $mod+Mod1+Shift K resize vertical -100
+riverctl map normal $mod+Mod1+Shift L resize horizontal 100
+
+# Mod + Left Mouse Button to move views
+riverctl map-pointer normal $mod BTN_LEFT move-view
+
+# Mod + Right Mouse Button to resize views
+riverctl map-pointer normal $mod BTN_RIGHT resize-view
+
+##############
+# Scratchpad #
+##############
+scratch_tag=$((1 << 20 ))
+riverctl map normal $mod       P toggle-focused-tags ${scratch_tag}
+riverctl map normal $mod+Shift P set-view-tags       ${scratch_tag}
+all_but_scratch_tag=$(( ((1 << 32) - 1) ^ $scratch_tag ))
+riverctl spawn-tagmask ${all_but_scratch_tag}
+
+
+
+for i in $(seq 1 9)
+do
+    tags=$((1 << ($i - 1)))
+
+    # Mod+[1-9] to focus tag [0-8]
+    riverctl map normal $mod $i set-focused-tags $tags
+
+    # Mod+Shift+[1-9] to tag focused view with tag [0-8]
+    riverctl map normal $mod+Shift $i set-view-tags $tags
+
+    # Mod+Control+[1-9] to toggle focus of tag [0-8]
+    riverctl map normal $mod+Control $i toggle-focused-tags $tags
+
+    # Mod+Shift+Control+[1-9] to toggle tag [0-8] of focused view
+    riverctl map normal $mod+Shift+Control $i toggle-view-tags $tags
+done
+
+# Mod+0 to focus all tags
+# Mod+Shift+0 to tag focused view with all tags
+all_tags=$(((1 << 32) - 1))
+riverctl map normal $mod 0 set-focused-tags $all_tags
+riverctl map normal $mod+Shift 0 set-view-tags $all_tags
+riverctl map normal $mod       Backspace focus-previous-tags
+
+# Mod+Space to toggle float
+riverctl map normal $mod Space toggle-float
+
+# Mod+F to toggle fullscreen
+riverctl map normal $mod F toggle-fullscreen
+
+# Mod+{Up,Right,Down,Left} to change layout orientation
+# riverctl map normal $mod Up    send-layout-cmd rivertile "main-location top"
+# riverctl map normal $mod Right send-layout-cmd rivertile "main-location right"
+# riverctl map normal $mod Down  send-layout-cmd rivertile "main-location bottom"
+# riverctl map normal $mod Left  send-layout-cmd rivertile "main-location left"
+
+# Declare a passthrough mode. This mode has only a single mapping to return to
+# normal mode. This makes it useful for testing a nested wayland compositor
+riverctl declare-mode passthrough
+
+# Mod+F11 to enter passthrough mode
+riverctl map normal $mod F11 enter-mode passthrough
+
+# Mod+F11 to return to normal mode
+riverctl map passthrough $mod F11 enter-mode normal
+
+# Various media key mapping examples for both normal and locked mode which do
+# not have a modifier
+for mode in normal locked
+do
+    # Eject the optical drive
+    riverctl map $mode None XF86Eject spawn 'eject -T'
+
+    # Control pulse audio volume with pamixer (https://github.com/cdemoulins/pamixer)
+    riverctl map $mode None XF86AudioRaiseVolume  spawn 'pamixer -i 5'
+    riverctl map $mode None XF86AudioLowerVolume  spawn 'pamixer -d 5'
+    riverctl map $mode None XF86AudioMute         spawn 'pamixer --toggle-mute'
+
+    # Control MPRIS aware media players with playerctl (https://github.com/altdesktop/playerctl)
+    riverctl map $mode None XF86AudioMedia spawn 'playerctl play-pause'
+    riverctl map $mode None XF86AudioPlay  spawn 'playerctl play-pause'
+    riverctl map $mode None XF86AudioPrev  spawn 'playerctl previous'
+    riverctl map $mode None XF86AudioNext  spawn 'playerctl next'
+
+    # Control screen backlight brighness with light (https://github.com/haikarainen/light)
+    riverctl map $mode None XF86MonBrightnessUp   spawn 'light -A 5'
+    riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 5'
+done
+
+riverctl background-color       "0x404040" 
+riverctl border-color-unfocused "0x202020"
+riverctl border-color-focused   "0xF0F0F0"
+riverctl border-width 1
+riverctl xcursor-theme tarazed
+gsettings set org.gnome.desktop.interface gtk-theme Adwaita
+gsettings set org.gnome.desktop.interface icon-theme Breeze
+gsettings set org.gnome.desktop.wm.preferences button-layout " "
+gsettings set org.gnome.desktop.interface cursor-theme tarazed
+
+# Set repeat rate
+riverctl set-repeat 50 300
+
+# Set app-ids of views which should float
+riverctl float-filter-add "float"
+riverctl float-filter-add "popup"
+
+# Set app-ids of views which should use client side decorations
+riverctl csd-filter-add "gedit"
+
+# Set and exec into the default layout generator, rivertile.
+# River will send the process group of the init executable SIGTERM on exit.
+#riverctl default-layout rivertile
+#exec rivertile
+# Mod+H and Mod+L to decrease/increase the main ratio of rivertile(1)
+# riverctl map normal $mod H send-layout-cmd rivertile "main-ratio -0.05"
+# riverctl map normal $mod L send-layout-cmd rivertile "main-ratio +0.05"
+
+# Mod+Shift+H and Mod+Shift+L to increment/decrement the main count of rivertile(1)
+# riverctl map normal $mod+Shift H send-layout-cmd rivertile "main-count +1"
+# riverctl map normal $mod+Shift L send-layout-cmd rivertile "main-count -1"
+
+##########
+# Layout #
+##########
+riverctl spawn "stacktile --primary-sublayout \"${sublayout}\""
+riverctl default-layout stacktile
+riverctl map normal $mod       H     send-layout-cmd stacktile "primary_ratio -0.05"
+riverctl map normal $mod       L     send-layout-cmd stacktile "primary_ratio +0.05"
+riverctl map normal $mod+Shift H     send-layout-cmd stacktile "primary_count  +1"
+riverctl map normal $mod+Shift L     send-layout-cmd stacktile "primary_count  -1"
+# riverctl map normal $mod       Minus send-layout-cmd stacktile "all_padding -10"
+# riverctl map normal $mod       Plus  send-layout-cmd stacktile "all_padding +10"
+riverctl map normal $mod       Up    send-layout-cmd stacktile "primary_position top"
+riverctl map normal $mod       Right send-layout-cmd stacktile "primary_position right"
+riverctl map normal $mod       Down  send-layout-cmd stacktile "primary_position bottom"
+riverctl map normal $mod       Left  send-layout-cmd stacktile "primary_position left"
+
+
+
+riverctl default-layout stacktile
+exec stacktile --per-tag-config --inner-padding 0 --outer-padding 0
+
+# you want to use `stacktile --per-tag-config --primary-sublayout rows --remainder-sublayout rows --secondary-count 0` to clonse rivertiles layout
+# and to switch to place all views in the full layout, you need to use two user commands: "primary_sublayout full" and "all_primary_toggle"
+# You can omit the first command if you want the primary sublayout to be "full" constantly

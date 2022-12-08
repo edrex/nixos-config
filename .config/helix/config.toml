@@ -1,0 +1,37 @@
+theme = "doom_acario_dark"
+
+[editor]
+auto-save = true
+color-modes = true
+cursorline = true
+gutters = ["diagnostics", "line-numbers", "spacer"]
+line-number = "relative"
+mouse = true
+true-color = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[editor.indent-guides]
+render = true
+
+[editor.lsp]
+display-messages = true
+
+[editor.whitespace]
+[editor.whitespace.characters]
+nbsp = "⍽"
+newline = "⏎"
+space = "·"
+tab = "→"
+tabpad = "-"
+
+[editor.whitespace.render]
+newline = "all"
+space = "all"
+tab = "all"
