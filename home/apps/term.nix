@@ -1,8 +1,8 @@
 {pkgs, ...}:  
 let
   font = {
-    name = "Iosevka";
-    size = 9;
+    name = "Fira Code";
+    size = 10;
   };
 in {
   home.sessionVariables = {
@@ -11,6 +11,7 @@ in {
 
   home.packages = with pkgs; [
     fzf
+    fira-code
   ];
 
   programs = {
@@ -33,7 +34,7 @@ in {
           term = "xterm-256color";
 
           font = "${font.name}:size=${toString font.size}";
-          # dpi-aware = "yes";
+          dpi-aware = "yes";
         };
 
         mouse = {

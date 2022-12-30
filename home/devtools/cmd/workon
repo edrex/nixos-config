@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+import argparse
+from urllib.parse import urlparse
+import sys
+import os
+from subprocess import call
+
+parser = argparse.ArgumentParser(description="Work on the passed git URL, cloning to canonical path under $SRCPATH, eg ~/src/github.com/edrex/hello. This convention comes from my habit of setting GOPATH=$HOME.")
+parser.add_argument('url')
+args = parser.parse_args()
+
+url = urlparse(args.url)
+if url.scheme not in ['http', 'https']:
+    print("invalid URL scheme")
+    sys.exit
+
+srcpath = os.path.expanduser(os.environ.get("SRCPATH") or "~/src")
+pjpath = os.path.join(srcpath, url.netloc, url.path[1:])
+if not os.path.exists(pjpath):
+    status = call(['git', 'clone', args.url, pjpath])
+    if status != 0:
+        print("git clone failed");
+        sys.exit;
+
+os.chdir(pjpath)
+sh = os.environ.get("SHELL", 'sh');
+os.execlp(sh, sh)

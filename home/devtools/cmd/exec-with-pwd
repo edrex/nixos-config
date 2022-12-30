@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# Sauce:
+# https://blog.freesources.org//posts/2019/12/switch_to_sway/#Preserve_working_directory_in_new_terminal_instances
+# Small script that tries to determine the PWD of the focused terminal
+# (in sway tiling window manager) and pass it to the newly spawned one.
+
+if [ $# -lt 1 ]; then
+    echo "Usage: ${0} command
+    eg: ${0} termite"
+    exit
+fi
+
+CMD=$1
+shift
+FOCUSED_PID=""
+if [ ! type jq 2>/dev/null ]; then
+    echo "ERROR: jq not installed" >&2
+else
+    FOCUSED_PID="$(swaymsg -t get_tree | jq '.. | select(.type?) |
+        select(.type=="con") | select(.focused==true).pid')"
+    echo "FPID: $FOCUSED_PID"
+fi
+
+FOCUSED_PWD=""
+# Check if $FOCUSED_PID is an integer
+if [ "$FOCUSED_PID" -eq "$FOCUSED_PID" 2>/dev/null ]; then
+    FOCUSED_PPID="$(ps -o pid= --ppid "$FOCUSED_PID" | awk '{print $1}')"
+    if [ "$FOCUSED_PPID" -eq "$FOCUSED_PPID" 2>/dev/null ]; then
+        FOCUSED_PWD="$(readlink "/proc/$FOCUSED_PPID/cwd")"
+        echo "FPWD: $FOCUSED_PWD"
+    fi
+fi
+
+# Spawn terminal in background
+if [ -d "$FOCUSED_PWD" ]; then
+    cd $FOCUSED_PWD && $CMD $@ &
+else
+    $CMD $@ &
+fi

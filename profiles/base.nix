@@ -1,17 +1,18 @@
 { config, pkgs, lib, nix, inputs, ... }:
-
 {
   networking = {
-    useNetworkd = true;
+    #useNetworkd = true;
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
     useDHCP = false;
   };
 
-  systemd.network = {
-    enable = true;
-  };
+  # systemd-networkd-wait-online.service fails after a timeout if enabled, similar to
+  # https://github.com/NixOS/nixpkgs/issues/30904
+  # systemd.network = {
+  #   enable = true;
+  # };
 
   services.openssh = {
     enable = true;
@@ -89,16 +90,4 @@
     cachix
     diffoscope
   ];
-
-  programs.bash.enableCompletion = true;
-
-
-#TODO: vim editor stuff in module
-# vimPlugins.vim-nix
-
-  environment.variables = {
-    "EDITOR" = "vim";
-    "VISUAL" = "vim";
-  };
-
 }

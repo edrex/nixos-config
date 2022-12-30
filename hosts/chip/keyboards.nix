@@ -31,8 +31,9 @@
 # evdev:input:*
 evdev:name:Goldtouch Bluetooth Keyboard:dmi:bvn*:bvr*:bd*:svn*:pn*
  KEYBOARD_KEY_700e2=leftmeta
- KEYBOARD_KEY_700e6=rightmeta
  KEYBOARD_KEY_700e3=leftalt
+ KEYBOARD_KEY_700e6=rightmeta
+ KEYBOARD_KEY_700e7=rightalt
  KEYBOARD_KEY_70039=esc
 
 # from evemu-describe
